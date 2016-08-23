@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:id="@+id/row_samachar_ll_thumb"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:background="@drawable/list_selector"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="2dp"
+            android:background="@color/orange">
+
+        <ImageView
+            android:id="@+id/row_khedut_safal_gatha_thumb"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:background="@color/light_yellow"
+            android:contentDescription="@null"
+            android:scaleType="fitXY"
+            android:layout_centerInParent="true"
+            android:src="@drawable/img_back"/>
+
+            <ProgressBar
+                android:id="@+id/progressbar_khedutgatha_listview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:visibility="gone"/>
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_gravity="center_vertical"
+            android:orientation="vertical">
+
+        <com.agriscienceapp.font.AgriScienceTextView
+            android:id="@+id/row_khedut_safal_gatha_title"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textStyle="bold"
+            android:ellipsize="end"
+            android:maxLines="3"
+            android:textColor="@android:color/black"
+            android:text=""
+            app:typeface="2"
+            android:textSize="15sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/iv_share_khedutgataha"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minHeight="30dp"
+        android:minWidth="30dp"
+        android:visibility="gone"
+        android:src="@drawable/share_round"
+        android:layout_gravity="end"
+        android:layout_marginRight="10dp"/>
+
+    </LinearLayout>

@@ -1,0 +1,35 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_centerInParent="true"
+    tools:context="com.agriscienceapp.fragments.KrushiSalahFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <GridView
+        android:id="@+id/grid_krushi_salah"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_centerInParent="true"
+        android:focusable="true"
+        android:gravity="center_horizontal"
+        android:listSelector="@color/light_orange"
+        android:numColumns="3" />
+
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/adView_KrushiSalah"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerInParent="true"
+        android:visibility="gone"
+        ads:adSize="BANNER"
+        ads:adUnitId="@string/Ad_Unit_Id_KrushiSalah">
+
+    </com.google.android.gms.ads.AdView>
+
+
+</RelativeLayout>

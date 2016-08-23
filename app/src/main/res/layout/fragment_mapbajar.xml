@@ -1,0 +1,71 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/back_map_bajar"
+    tools:context="com.agriscienceapp.fragments.MapbajarFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/gujaratbajarbhav_margintop"
+        android:src="@drawable/bajarbhav_header" />
+
+    <ImageView
+        android:id="@+id/img_bajar_map_UtarGujarat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/utargujarat_margin_top"
+        android:src="@drawable/utargujarat_map" />
+
+    <ImageView
+        android:id="@+id/img_bajar_map_Kutch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/kutch_margin_left"
+        android:layout_marginTop="@dimen/kutch_margin_top"
+        android:src="@drawable/kutch_map" />
+
+    <ImageView
+        android:id="@+id/img_bajar_map_MadhyaGujarat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/madhyagujarat_margin_right"
+        android:layout_marginTop="@dimen/madhyagujarat_margin_top"
+        android:src="@drawable/madhyagujarat_map" />
+
+    <ImageView
+        android:id="@+id/img_bajar_map_Saurastra"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/img_bajar_map_Kutch"
+        android:layout_marginLeft="@dimen/saurashtra_margin_left"
+        android:layout_marginTop="@dimen/saurashtra_margin_top"
+        android:src="@drawable/saurastra_map" />
+
+    <ImageView
+        android:id="@+id/img_bajar_map_DakshinGujarat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/img_bajar_map_MadhyaGujarat"
+        android:layout_marginRight="@dimen/dakshingujarat_margin_right"
+        android:layout_marginTop="@dimen/saurashtra_margin_top"
+        android:src="@drawable/dakshingujarat_map" />
+
+    <ImageView
+        android:id="@+id/img_bajar_map_AnyaBajarBhav"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="@dimen/bajarbhav_margin_bottom"
+        android:layout_marginRight="@dimen/bajarbhav_margin_right"
+        android:src="@drawable/bajarbhav_map" />
+
+</RelativeLayout>

@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/activity_drawer_ll_top_heading"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/back_logo"
+        android:padding="15dp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/logo_navigation"
+            android:layout_centerVertical="true"
+            android:layout_centerInParent="true"/>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/activity_drawer_ll_option"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="10dp"
+        android:layout_below="@id/activity_drawer_ll_top_heading"
+        android:orientation="vertical"
+        android:weightSum="6">
+
+        <LinearLayout
+            android:id="@+id/ll_samachar"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/ll_item_samachar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:orientation="horizontal"
+                android:visibility="visible"
+                android:gravity="center"
+                android:weightSum="2">
+
+                <ImageView
+                    android:id="@+id/img_samachar"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="0.5"
+                    android:src="@drawable/samachar_home" />
+
+                <com.agriscienceapp.font.AgriScienceTextView
+                    android:id="@+id/tv_samachar"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1.5"
+                    android:text="સમાચાર"
+                    android:textColor="@android:color/black"
+                    android:textSize="20dp"
+                    app:typeface="2"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/orange"></View>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_bajar"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/ll_item_bajar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:orientation="horizontal"
+                android:visibility="visible"
+                android:gravity="center"
+                android:weightSum="2">
+
+                <ImageView
+                    android:id="@+id/img_bajar"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="0.5"
+                    android:src="@drawable/bajar_home" />
+
+                <com.agriscienceapp.font.AgriScienceTextView
+                    android:id="@+id/tv_bajar"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1.5"
+                    android:text="બજારભાવ"
+                    android:textColor="@android:color/black"
+                    android:textSize="20dp"
+                    app:typeface="2"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/orange"></View>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/ll_krushisalah"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/ll_item_krushisalah"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:orientation="horizontal"
+                android:visibility="visible"
+                android:gravity="center"
+                android:weightSum="2">
+
+                <ImageView
+                    android:id="@+id/img_krushishalah"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="0.5"
+                    android:src="@drawable/krushishala_home" />
+
+                <com.agriscienceapp.font.AgriScienceTextView
+                    android:id="@+id/tv_krushisalah"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1.5"
+                    android:text="કૃષિ સલાહ"
+                    android:textColor="@android:color/black"
+                    android:textSize="20dp"
+                    app:typeface="2"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/orange"></View>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_khedut_gatha"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/ll_item_khedut_gatha"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:orientation="horizontal"
+                android:visibility="visible"
+                android:gravity="center"
+                android:weightSum="2">
+
+                <ImageView
+                    android:id="@+id/img_khedut_gatha"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="0.5"
+                    android:src="@drawable/khedutgatha_home" />
+
+                <com.agriscienceapp.font.AgriScienceTextView
+                    android:id="@+id/tv_khedut_gatha"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1.5"
+                    android:text="ખેડૂત સફળગાથા"
+                    android:textColor="@android:color/black"
+                    android:textSize="20dp"
+                    app:typeface="2"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/orange"></View>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/ll_agrisci_tv"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/ll_item_agrisci_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:orientation="horizontal"
+                android:visibility="visible"
+                android:gravity="center"
+                android:weightSum="2">
+
+                <ImageView
+                    android:id="@+id/img_agrisci_tv"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="0.5"
+                    android:src="@drawable/tv_home" />
+
+                <com.agriscienceapp.font.AgriScienceTextView
+                    android:id="@+id/tv_agrisci_tv"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1.5"
+                    android:text="એગ્રીસાયન્સ ટીવી"
+                    android:textColor="@android:color/black"
+                    android:textSize="20dp"
+                    app:typeface="2"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/orange"></View>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_utara"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/ll_item_utara"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:orientation="horizontal"
+                android:visibility="visible"
+                android:gravity="center"
+                android:weightSum="2">
+
+                <ImageView
+                    android:id="@+id/img_utara"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="0.5"
+                    android:src="@drawable/utara_home" />
+
+                <com.agriscienceapp.font.AgriScienceTextView
+                    android:id="@+id/tv_utara"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1.5"
+                    android:text="૭/૧૨ ઉતારા"
+                    android:textColor="@android:color/black"
+                    android:textSize="20dp"
+                    app:typeface="2"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/orange">
+            </View>
+
+            <com.agriscienceapp.font.AgriScienceTextView
+                android:id="@+id/tv_pak_pasand"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1.5"
+                android:text="૭/૧૨ ઉતારા"
+                android:textColor="@android:color/black"
+                android:textSize="20dp"
+                app:typeface="2"
+                android:visibility="gone"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>

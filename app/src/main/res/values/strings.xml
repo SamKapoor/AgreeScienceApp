@@ -1,0 +1,58 @@
+<resources>
+
+    <string name="app_name">AgriScience</string>
+    <string name="title_activity_navigation_drawer">AgriScience</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="str_agri_sci_tv">AgriScience TV</string>
+    <string name="str_utara">Utara</string>
+
+    <string name="str_kheti_mahiti">...ખેતીની વધુ માહિતી અને બજારભાવ માટે ડાઉનલોડ કરો ઍગ્રીસાયન્સ કૃષિ માહિતી અપ્લિકેશન</string>
+    <string name="app_url">https://play.google.com/store/apps/details?id=com.agriscienceapp</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="str_samachar_fragment">Samachar fragment</string>
+    <string name="str_bajar_fragment">Bajar Frament</string>
+    <string name="str_krushisalah_fragment">Krushi Salah Frament</string>
+    <string name="str_khedut_gatha_fragment">Khedut Gatha Frament</string>
+    <string name="str_agriscience_tv_fragment">AgriScience TV Frament</string>
+    <string name="str_utara_fragment">Utara Fragment</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="str_samachar">સમાચાર</string>
+    <string name="str_bajarbhav">બજારભાવ</string>
+    <string name="str_khedut_safal_gatha">ખેડૂત સફળગાથા</string>
+    <string name="str_Krushi_salah">કૃષિ સલાહ</string>
+    <string name="str_Tv">એગ્રીસાયન્સ ટીવી</string>
+    <string name="str_Sat_utara">૭/૧૨ ઉતારા</string>
+    <string name="str_samachar_list_title">Title</string>
+    <!--<string name="str_pak_pasand">પાક પસંદ કરો</string>-->
+    <string name="str_pak_pasand">બજારભાવ માટે પાક પસંદ કરો</string>
+
+    <!-- ID for the Advertise-->
+    <string name="Ad_Unit_Id_Samachar">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="Ad_Unit_Id_KhedutGatha">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="Ad_Unit_Id_KrushiSalah">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="Ad_Unit_Id_KrushiSalahDetail">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="title_activity_pak_pasand">PakPasandActivity</string>
+
+
+    <string name="mahiti_whatsapp_number">ખેતીની માહિતી માટે વોટ્સઍપ નં-૭૭૭૮૯૬૬૧૬૬</string>
+
+
+    <!-- Pref values -->
+    <string name="pref_selected_crop1">prefSelected_crop1</string>
+    <string name="pref_selected_crop2">prefSelected_crop2</string>
+    <string name="pref_selected_crop3">prefSelected_crop3</string>
+    <string name="pref_selected_crop4">prefSelected_crop4</string>
+    <string name="pref_selected_crop5">prefSelected_crop5</string>
+
+    <string name="pref_selected_crop1id">prefSelected_crop1id</string>
+    <string name="pref_selected_crop2id">prefSelected_crop2id</string>
+    <string name="pref_selected_crop3id">prefSelected_crop3id</string>
+    <string name="pref_selected_crop4id">prefSelected_crop4id</string>
+    <string name="pref_selected_crop5id">prefSelected_crop5id</string>
+</resources>
