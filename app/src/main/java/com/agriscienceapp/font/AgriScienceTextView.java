@@ -2,6 +2,7 @@ package com.agriscienceapp.font;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.text.Html;
 import android.util.AttributeSet;
 import android.widget.TextView;
 
@@ -51,4 +52,9 @@ public class AgriScienceTextView extends TextView {
         }
         values.recycle();
     }
+
+//    private BufferType mBufferType = BufferType.NORMAL;
+//    public void setText(String text){
+//        setText(Html.fromHtml("<html><body style=\"text-align:justify\"> "+ text+ "</body></Html>"));
+//    }
 }

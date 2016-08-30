@@ -65,7 +65,7 @@ public class MapbajarFragment extends Fragment {
         MapZoneView = inflater.inflate(R.layout.fragment_mapbajar, container, false);
         ButterKnife.bind(this, MapZoneView);
 
-        //   progressDialog = ProgressDialog.show(getActivity(), "Fetching Data", "Please wait...", false, false);
+        //   progressDialog = ProgressDialog.show(getActivity(), "Fetching Data", "Jai Kisaan...", false, false);
 
         progressDialog = new ProgressDialog(getActivity());
         progressDialog.setMessage("Jai Kisaan...");

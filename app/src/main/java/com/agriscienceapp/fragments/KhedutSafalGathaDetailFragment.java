@@ -93,10 +93,10 @@ public class KhedutSafalGathaDetailFragment extends Fragment {
         imageLoader = ImageLoader.getInstance();
         initLoader(getActivity());
 
-        //  progress = ProgressDialog.show(getActivity(), "Fetching Data", "Please Wait", false, false);
+        //  progress = ProgressDialog.show(getActivity(), "Fetching Data", "Jai Kisaan", false, false);
 
         progress = new ProgressDialog(getActivity());
-        progress.setMessage("please Wait..");
+        progress.setMessage("Jai Kisaan..");
         progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progress.setIndeterminate(true);
         progress.setCancelable(false);
@@ -166,7 +166,7 @@ public class KhedutSafalGathaDetailFragment extends Fragment {
             super.onPreExecute();
             if (progress == null) {
                 progress = new ProgressDialog(mContext);
-                progress.setMessage("please Wait..");
+                progress.setMessage("Jai Kisaan..");
                 progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
                 progress.setIndeterminate(true);
                 progress.setCancelable(false);

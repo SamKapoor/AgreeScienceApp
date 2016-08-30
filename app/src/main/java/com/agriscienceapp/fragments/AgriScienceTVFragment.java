@@ -79,7 +79,7 @@ public class AgriScienceTVFragment extends Fragment {
 
         getAgriScienceDetailModelArrayList = new ArrayList<AgriScienceTVDetailModel>();
 
-   //     progressDialog = ProgressDialog.show(getActivity(), "Fetching Data", "Please Wait...", false, false);
+   //     progressDialog = ProgressDialog.show(getActivity(), "Fetching Data", "Jai Kisaan...", false, false);
 
         progressDialog = new ProgressDialog(getActivity());
         progressDialog.setMessage("Jai Kisaan...");

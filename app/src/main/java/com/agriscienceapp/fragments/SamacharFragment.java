@@ -126,7 +126,7 @@ public class SamacharFragment extends Fragment {
         progressDialog.show();
 
         // for change the color of text in progressDialog
-//        String s= "Please Wait...";
+//        String s= "Jai Kisaan...";
 //        SpannableString ss2=  new SpannableString(s);
 //        ss2.setSpan(new RelativeSizeSpan(2f), 0, ss2.length(), 0);
 //        ss2.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.green)), 0, ss2.length(), 0);

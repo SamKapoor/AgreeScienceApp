@@ -81,7 +81,7 @@ public class MainSplashActivity extends AppCompatActivity implements View.OnClic
 
 
         prgDialog = new ProgressDialog(this);
-        prgDialog.setMessage("Jai Kisan...");
+        prgDialog.setMessage("Jai Kisaan...");
         prgDialog.setCancelable(false);
 
         SharedPreferences prefs = getSharedPreferences("UserDetails",

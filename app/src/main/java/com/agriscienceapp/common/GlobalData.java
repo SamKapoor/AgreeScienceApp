@@ -32,7 +32,7 @@ public class GlobalData {
     public static final String TWEET_SUCCESS = "Your twitt has been posted successfully!";
     public static final String TWEET_FAIL = "You have already twitted the same Tweet!";
 
-    public static final String STR_PROGRESS_DIALOG_MESSAGE = "Please Wait...";
+    public static final String STR_PROGRESS_DIALOG_MESSAGE = "Jai Kisaan...";
     public static final String STR_INTERNET_ALERT_TITLE = "Network Error!";
     public static final String STR_INETRNET_ALERT_MESSAGE = "Internet is not available. Please try later.";
     public static final String STR_FORGOT_PASSWORD_ALERT_MESSAGE = "Forgot Password";

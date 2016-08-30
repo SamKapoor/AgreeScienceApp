@@ -52,7 +52,7 @@ public class GetJsonWithCallBack extends
         if (intDialogShow == 1) {
             progressDialog = new ProgressDialog(activity);
             progressDialog.setCancelable(false);
-            progressDialog.setMessage("Jai Kisan...");
+            progressDialog.setMessage("Jai Kisaan...");
             progressDialog.setTitle("");
             progressDialog.show();
         }
