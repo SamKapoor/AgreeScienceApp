@@ -48,6 +48,7 @@ import com.agriscienceapp.webservice.MessageDao;
 import com.agriscienceapp.webservice.OnUpdateListener;
 import com.agriscienceapp.webservice.RestClientRetroFit;
 import com.androidquery.AQuery;
+import com.bumptech.glide.Glide;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
@@ -264,15 +265,16 @@ public class SamacharFragment extends Fragment {
                 dialog.setView(dialogLayout);
                 dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
 
-                dialog.show();
-
                 dialog.setOnShowListener(new DialogInterface.OnShowListener() {
                     @Override
                     public void onShow(DialogInterface d) {
                         ImageView image = (ImageView) dialog.findViewById(R.id.goProDialogImage);
-                        imageLoader.displayImage(samacharModel.getPopup().trim(), image, optionsAdBanner);
+//                        imageLoader.displayImage(samacharModel.getPopup().trim(), image, optionsAdBanner);
+                        System.out.println("Popup: 11- " + samacharModel.getPopup().trim());
+                        Glide.with(getActivity()).load(samacharModel.getPopup().trim()).into(image);
                     }
                 });
+                dialog.show();
             }
         }
     }

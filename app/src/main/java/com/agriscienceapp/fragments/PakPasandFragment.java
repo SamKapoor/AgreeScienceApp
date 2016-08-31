@@ -98,7 +98,7 @@ public class PakPasandFragment extends Fragment {
     ArrayList<PakPasandCropDetailModel> getCropArrayList;
     ArrayList<PakPasandYardDetailModel> getYardArrayList;
 
-    private String BASEURL = "http://agriscienceindia.com/api/MasterDetail/";
+    private String BASEURL = "http://agriscienceindia.com/api/MasterDetailV2/";
     private String MethodsCrop = "PakPasandCrop";
     private String MethodsYard = "PakPasandYard";
 

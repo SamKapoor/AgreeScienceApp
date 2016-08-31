@@ -1,25 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_centerVertical="true"
-    android:orientation="vertical"
     android:background="@drawable/home_background"
+    android:orientation="vertical"
     tools:context="com.agriscienceapp.activity.MainSplashActivity">
 
     <ScrollView
         android:layout_width="match_parent"
-        android:padding="@dimen/activity_horizontal_margin"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:padding="@dimen/activity_horizontal_margin">
 
 
         <LinearLayout
             android:id="@+id/llmain"
             android:layout_width="match_parent"
-            android:layout_margin="10dp"
             android:layout_height="match_parent"
             android:layout_gravity="center"
+            android:layout_margin="10dp"
             android:orientation="vertical">
 
 
@@ -47,52 +48,57 @@
                 android:layout_marginTop="@dimen/activity_vertical_margin"
                 android:orientation="horizontal">
 
-                <TextView
+                <com.agriscienceapp.font.AgriScienceTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Name "
+                    android:text="નામ:   "
+                    android:layout_gravity="center_vertical"
                     android:textColor="@android:color/black"
-                    android:textSize="20sp" />
+                    android:textSize="18sp"
+                    app:typeface="1" />
+
 
                 <EditText
                     android:id="@+id/edtName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/fab_margin"
+                    android:layout_marginLeft="20dp"
                     android:gravity="start"
-                    android:textColor="@android:color/black"
                     android:hint="Enter Name "
                     android:inputType="textPersonName"
+                    android:textColor="@color/green"
                     android:textColorHint="@color/black_transparent"
                     android:textSize="20sp" />
 
             </LinearLayout>
 
             <LinearLayout
-
                 android:id="@+id/llmobile"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                >
 
 
-                <TextView
+                <com.agriscienceapp.font.AgriScienceTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Mobile"
+                    android:text="ફોન:    "
+                    android:layout_gravity="center_vertical"
                     android:textColor="@android:color/black"
-                    android:textSize="20sp" />
+                    android:textSize="18sp"
+                    app:typeface="1" />
 
                 <EditText
                     android:id="@+id/edtMobile"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/fab_margin"
+                    android:layout_marginLeft="20dp"
                     android:gravity="start|left"
                     android:hint="Enter Mobile"
                     android:inputType="number"
-                    android:textColor="@android:color/black"
+                    android:textColor="@color/green"
                     android:textColorHint="@color/black_transparent"
                     android:textSize="20sp" />
 
@@ -103,26 +109,25 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:weightSum="2"
                 android:orientation="horizontal">
 
 
-                <TextView
-                    android:layout_width="0dp"
+                <com.agriscienceapp.font.AgriScienceTextView
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Pak"
-                    android:layout_weight="0.8"
                     android:layout_gravity="center_vertical"
+                    android:text="પાક:   "
+
                     android:textColor="@android:color/black"
-                    android:textSize="20sp" />
+                    android:textSize="18sp"
+                    app:typeface="1" />
 
                 <Spinner
                     android:id="@+id/spinner_pak"
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
+                    android:layout_marginLeft="20dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:layout_margin="3dp"
-                    android:layout_weight="1.2"
                     android:dropDownSelector="@color/green" />
             </LinearLayout>
 
@@ -131,26 +136,24 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:weightSum="2"
                 android:orientation="horizontal">
 
 
-                <TextView
-                    android:layout_width="0dp"
+                <com.agriscienceapp.font.AgriScienceTextView
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Jillo"
-                    android:layout_weight="0.8"
                     android:layout_gravity="center_vertical"
+                    android:text="જિલ્લો: "
                     android:textColor="@android:color/black"
-                    android:textSize="20sp" />
+                    android:textSize="18sp"
+                    app:typeface="1" />
 
                 <Spinner
                     android:id="@+id/spinner_jillo"
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:layout_margin="3dp"
-                    android:layout_weight="1.2"
+                    android:layout_marginLeft="20dp"
                     android:dropDownSelector="@color/green" />
             </LinearLayout>
 
@@ -159,26 +162,24 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:weightSum="2"
                 android:orientation="horizontal">
 
 
-                <TextView
-                    android:layout_width="0dp"
+                <com.agriscienceapp.font.AgriScienceTextView
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Taluko"
-                    android:layout_weight="0.8"
                     android:layout_gravity="center_vertical"
+                    android:text="તાલુકો:"
                     android:textColor="@android:color/black"
-                    android:textSize="20sp" />
+                    android:textSize="18sp"
+                    app:typeface="1" />
 
                 <Spinner
                     android:id="@+id/spinner_taluko"
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:layout_margin="3dp"
-                    android:layout_weight="1.2"
+                    android:layout_marginLeft="20dp"
                     android:dropDownSelector="@color/green" />
             </LinearLayout>
 

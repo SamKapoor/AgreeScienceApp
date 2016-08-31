@@ -69,7 +69,7 @@ public class GetJsonWithCallBack extends
             JSONParser jsonParser = new JSONParser();
 //            getJsonObject = jsonParser.getJSONFromUrl("http://agriscienceindia.com/api/MasterDetail/AppsUserInsert", jsonObject);
 
-            getJsonObject = jsonParser.getJSONFromUrl("http://agriscienceindia.com/api/MasterDetail/AppsUserInsert?TokenId=" + URLEncoder.encode(TokenId) + "&DeviceID=" + URLEncoder.encode(strDeviceID) + "&UserName=" + URLEncoder.encode(strName).toString().trim() + "&MobileNo=" + strMobilNo.toString().trim()+ "&CropId=" + cropId+ "&DistID=" + distId+ "&TaluID=" + taluId);
+            getJsonObject = jsonParser.getJSONFromUrl("http://agriscienceindia.com/api/MasterDetailV2/AppsUserInsert?TokenId=" + URLEncoder.encode(TokenId) + "&DeviceID=" + URLEncoder.encode(strDeviceID) + "&UserName=" + URLEncoder.encode(strName).toString().trim() + "&MobileNo=" + strMobilNo.toString().trim()+ "&CropId=" + cropId+ "&DistID=" + distId+ "&TaluID=" + taluId);
 
 
         } catch (Exception e) {

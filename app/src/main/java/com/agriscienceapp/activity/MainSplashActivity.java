@@ -77,7 +77,7 @@ public class MainSplashActivity extends AppCompatActivity implements View.OnClic
     private EditText edtMobile;
     String strTokenId = "abcd";
     CheckBox chekTerms;
-    private String BASEURL = "http://agriscienceindia.com/api/MasterDetail/";
+    private String BASEURL = "http://agriscienceindia.com/api/MasterDetailV2/";
     private String Methods = "getTermsCondition?";
     private String APICALL_URL = "";
     private ProgressDialog progress;
@@ -340,13 +340,13 @@ public class MainSplashActivity extends AppCompatActivity implements View.OnClic
 //                        }
 //                        Toast.makeText(applicationContext, "Reg Id shared successfully with Web App ",
 //                                Toast.LENGTH_LONG).show();
-                        Intent i = new Intent(applicationContext,
+                        /*Intent i = new Intent(applicationContext,
                                 SplashActivity.class);
                         i.putExtra("regId", regId);
 //                        Log.d("Id------------", "--------------" + regId);
 
                         startActivity(i);
-                        finish();
+                        finish();*/
                     }
 
                     @Override
@@ -478,6 +478,15 @@ public class MainSplashActivity extends AppCompatActivity implements View.OnClic
                     } else if (edtMobile.getText().toString().length() >= 12) {
                         edtMobile.setFocusable(true);
                         Toast.makeText(getApplicationContext(), "Enter Maximum 12 Digits Mobile Number", Toast.LENGTH_SHORT).show();
+                    } else if (cropId == 0) {
+                        spinnerPak.setFocusable(true);
+                        Toast.makeText(getApplicationContext(), "Please select Pak", Toast.LENGTH_SHORT).show();
+                    } else if (distId == 0) {
+                        spinnerJillo.setFocusable(true);
+                        Toast.makeText(getApplicationContext(), "Please select Jillo", Toast.LENGTH_SHORT).show();
+                    } else if (taluId == 0) {
+                        spinnerTaluko.setFocusable(true);
+                        Toast.makeText(getApplicationContext(), "Please select Taluko", Toast.LENGTH_SHORT).show();
                     } else if (!chekTerms.isChecked()) {
                         Toast.makeText(getApplicationContext(), "Please check terms & conditions.", Toast.LENGTH_SHORT).show();
                     } else {

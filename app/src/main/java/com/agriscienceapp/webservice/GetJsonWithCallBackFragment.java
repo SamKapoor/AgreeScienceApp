@@ -49,7 +49,7 @@ public class GetJsonWithCallBackFragment extends
         JSONObject getJsonObject = null;
         try {
             JSONParser jsonParser = new JSONParser();
-            getJsonObject = jsonParser.getJSONFromUrl("http://agriscienceindia.com/api/MasterDetail/NewsList/", jsonObject);
+            getJsonObject = jsonParser.getJSONFromUrl("http://agriscienceindia.com/api/MasterDetailV2/NewsList/", jsonObject);
         } catch (Exception e) {
             e.printStackTrace();
         }

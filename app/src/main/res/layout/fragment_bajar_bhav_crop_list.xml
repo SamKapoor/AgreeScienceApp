@@ -188,7 +188,9 @@
     <ImageView
         android:id="@+id/iv_ads_samachar"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="wrap_content"
+        android:minHeight="50dp"
+        android:maxHeight="50dp"
         android:layout_alignParentBottom="true"
         android:scaleType="fitXY"
         android:layout_marginRight="5dp"

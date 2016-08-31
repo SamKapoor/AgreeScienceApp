@@ -70,7 +70,7 @@ public class KhedutSafalGathaDetailFragment extends Fragment {
     @Bind(R.id.iv_share_khedutgatha_detail)
     ImageView ivShareKhedutGathaDetail;
 
-    private String BASEURL = "http://agriscienceindia.com/api/MasterDetail/";
+    private String BASEURL = "http://agriscienceindia.com/api/MasterDetailV2/";
     private String Methods = "StoriesDetail?";
     private String KEY_STORYID = "StoryId";
 
@@ -306,7 +306,7 @@ public class KhedutSafalGathaDetailFragment extends Fragment {
                 dialog.setView(dialogLayout);
                 dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
 
-                dialog.show();
+
 
                 dialog.setOnShowListener(new DialogInterface.OnShowListener() {
                     @Override
@@ -315,6 +315,7 @@ public class KhedutSafalGathaDetailFragment extends Fragment {
                         imageLoader.displayImage(samacharModel.getPopup().trim(), image, options);
                     }
                 });
+                dialog.show();
             }
         }
     }
@@ -339,7 +340,6 @@ public class KhedutSafalGathaDetailFragment extends Fragment {
                 dialog.setView(dialogLayout);
                 dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
 
-                dialog.show();
                 dialog.setOnShowListener(new DialogInterface.OnShowListener() {
                     @Override
                     public void onShow(DialogInterface d) {
@@ -347,6 +347,7 @@ public class KhedutSafalGathaDetailFragment extends Fragment {
                         imageLoader.displayImage(samacharModel.getPopup2().trim(), image, options);
                     }
                 });
+                dialog.show();
             }
         }
     }

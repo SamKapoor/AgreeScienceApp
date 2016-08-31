@@ -72,7 +72,7 @@ public class SamacharDetailFragment extends Fragment {
     @Bind(R.id.rl_samachar_detail_main)
     RelativeLayout rlSamacharDetailMain;
 
-    private String BASEURL = "http://agriscienceindia.com/api/MasterDetail/";
+    private String BASEURL = "http://agriscienceindia.com/api/MasterDetailV2/";
     private String Methods = "NewslistDetail?";
     private String KEY_NEWSID = "NewsId";
 
@@ -307,7 +307,7 @@ public class SamacharDetailFragment extends Fragment {
                 dialog.setView(dialogLayout);
                 dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
 
-                dialog.show();
+
 
                 dialog.setOnShowListener(new DialogInterface.OnShowListener() {
                     @Override
@@ -316,6 +316,7 @@ public class SamacharDetailFragment extends Fragment {
                         imageLoader.displayImage(samacharModel.getPopup().trim(), image, options);
                     }
                 });
+                dialog.show();
             }
         }
     }
@@ -340,7 +341,7 @@ public class SamacharDetailFragment extends Fragment {
                 dialog.setView(dialogLayout);
                 dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
 
-                dialog.show();
+
                 dialog.setOnShowListener(new DialogInterface.OnShowListener() {
                     @Override
                     public void onShow(DialogInterface d) {
@@ -348,6 +349,7 @@ public class SamacharDetailFragment extends Fragment {
                         imageLoader.displayImage(samacharModel.getPopup2().trim(), image, options);
                     }
                 });
+                dialog.show();
             }
         }
     }

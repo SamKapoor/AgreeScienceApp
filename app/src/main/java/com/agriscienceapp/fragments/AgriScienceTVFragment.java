@@ -2,8 +2,10 @@ package com.agriscienceapp.fragments;
 
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
@@ -16,6 +18,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -29,7 +32,9 @@ import com.agriscienceapp.font.AgriScienceTextView;
 import com.agriscienceapp.font.FontUtils;
 import com.agriscienceapp.model.AgriScienceTVDetailModel;
 import com.agriscienceapp.model.AgriScienceTVModel;
+import com.agriscienceapp.model.Detail;
 import com.agriscienceapp.webservice.RestClientRetroFit;
+import com.bumptech.glide.Glide;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
@@ -52,6 +57,8 @@ public class AgriScienceTVFragment extends Fragment {
     private final String TAG = AgriScienceTVFragment.class.getSimpleName();
     @Bind(R.id.listview_agriscience_tv)
     ListView listviewAgriscienceTv;
+    @Bind(R.id.iv_ads_tv)
+    ImageView ivAgriscienceTvAd;
 
     private View AgriScienceTVView;
     private ProgressDialog progressDialog;
@@ -62,6 +69,7 @@ public class AgriScienceTVFragment extends Fragment {
     ArrayList<AgriScienceTVDetailModel> getAgriScienceDetailModelArrayList;
 
     String packageName = "com.google.android.youtube";
+    private LayoutInflater inflater;
 
     public AgriScienceTVFragment() {
         // Required empty public constructor
@@ -74,6 +82,7 @@ public class AgriScienceTVFragment extends Fragment {
         AgriScienceTVView = inflater.inflate(R.layout.fragment_agri_science_tv, container, false);
         ButterKnife.bind(this, AgriScienceTVView);
 
+        this.inflater = inflater;
         imageLoader = ImageLoader.getInstance();
         initLoader(getActivity());
 
@@ -102,6 +111,19 @@ public class AgriScienceTVFragment extends Fragment {
                         CustomBaseAdapter customBaseAdapter = new CustomBaseAdapter(getActivity(), getAgriScienceDetailModelArrayList);
                         listviewAgriscienceTv.setAdapter(customBaseAdapter);
                     }
+
+                    if (!TextUtils.isEmpty(getAgriScienceDetailModelArrayList.get(0).getMainAdd())) {
+                        Glide.with(getActivity()).load(getAgriScienceDetailModelArrayList.get(0).getMainAdd()).into(ivAgriscienceTvAd);
+//                            aq.id(R.id.iv_ads_samachar).progress(R.id.progressbar_samachar_header).image(getSamacharDetailListArrayList.get(0).getThumbs(), false, false);
+                    } else {
+                        ivAgriscienceTvAd.setVisibility(View.GONE);
+                    }
+                    ivAgriscienceTvAd.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            setAdvClick(getAgriScienceDetailModelArrayList.get(0));
+                        }
+                    });
                 }
 
                 @Override
@@ -117,7 +139,39 @@ public class AgriScienceTVFragment extends Fragment {
         return AgriScienceTVView;
     }
 
+    private void setAdvClick(final AgriScienceTVDetailModel samacharModel) {
+        if (samacharModel != null) {
+            if (samacharModel.getContactNo().trim().length() > 0) {
+                Intent intent = new Intent(Intent.ACTION_DIAL);
+                intent.setData(Uri.parse("tel:" + samacharModel.getContactNo().trim()));
+                startActivity(intent);
+            } else if (samacharModel.getPopup().trim().length() > 0) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setPositiveButton("Close", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                final AlertDialog dialog = builder.create();
 
+                View dialogLayout = inflater.inflate(R.layout.detail_adv_dialog_layout, null);
+                dialog.setView(dialogLayout);
+                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+                dialog.setOnShowListener(new DialogInterface.OnShowListener() {
+                    @Override
+                    public void onShow(DialogInterface d) {
+                        ImageView image = (ImageView) dialog.findViewById(R.id.goProDialogImage);
+//                        imageLoader.displayImage(samacharModel.getPopup().trim(), image, optionsAdBanner);
+                        System.out.println("Popup: 11- " + samacharModel.getPopup().trim());
+                        Glide.with(getActivity()).load(samacharModel.getPopup().trim()).into(image);
+                    }
+                });
+                dialog.show();
+            }
+        }
+    }
     @Override
     public void onDestroyView() {
         super.onDestroyView();

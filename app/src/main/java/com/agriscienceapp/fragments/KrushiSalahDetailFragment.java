@@ -57,7 +57,7 @@ public class KrushiSalahDetailFragment extends Fragment {
     ImageView ivAdsSamachar;
     @Bind(R.id.tv_cropname_krushisalah)
     AgriScienceTextView tvCropnameKrushisalah;
-    private String BASEURL = "http://agriscienceindia.com/api/MasterDetail/";
+    private String BASEURL = "http://agriscienceindia.com/api/MasterDetailV2/";
     private String Methods = "Advisory?";
     private String KEY_CROPID = "CropId";
 

@@ -220,7 +220,7 @@ public class KhedutSafalGathaFragment extends Fragment {
                 dialog.setView(dialogLayout);
                 dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
 
-                dialog.show();
+
 
                 dialog.setOnShowListener(new DialogInterface.OnShowListener() {
                     @Override
@@ -229,6 +229,7 @@ public class KhedutSafalGathaFragment extends Fragment {
                         imageLoader.displayImage(kheduSafalGathaDetailModel.getPopup().trim(), image, optionsAdBanner);
                     }
                 });
+                dialog.show();
             }
         }
     }

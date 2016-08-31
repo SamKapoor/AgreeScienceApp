@@ -22,6 +22,33 @@ public class BajarBhavCropListDetailModel {
     private Object UpdatedBy;
     private Object UpdatedDate;
     private Object IsExist;
+    private String MainAdd;
+    private String ContactNo;
+    private String Popup;
+
+    public String getMainAdd() {
+        return MainAdd;
+    }
+
+    public void setMainAdd(String mainAdd) {
+        MainAdd = mainAdd;
+    }
+
+    public String getContactNo() {
+        return ContactNo;
+    }
+
+    public void setContactNo(String contactNo) {
+        ContactNo = contactNo;
+    }
+
+    public String getPopup() {
+        return Popup;
+    }
+
+    public void setPopup(String popup) {
+        Popup = popup;
+    }
 
     public String getDetailAdd() {
         return DetailAdd;

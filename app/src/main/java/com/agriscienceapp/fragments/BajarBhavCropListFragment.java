@@ -2,8 +2,10 @@ package com.agriscienceapp.fragments;
 
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -17,6 +19,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -27,8 +30,10 @@ import android.widget.Toast;
 
 import com.agriscienceapp.R;
 import com.agriscienceapp.font.AgriScienceTextView;
+import com.agriscienceapp.model.AgriScienceTVDetailModel;
 import com.agriscienceapp.model.BajarBhavCropListDetailModel;
 import com.agriscienceapp.webservice.AndroidNetworkUtility;
+import com.bumptech.glide.Glide;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
@@ -88,7 +93,7 @@ public class BajarBhavCropListFragment extends Fragment {
     @Bind(R.id.ll_bajar_bhav_capture)
     RelativeLayout llBajarBhavCapture;
 
-    private String BASEURL = "http://agriscienceindia.com/api/MasterDetail/";
+    private String BASEURL = "http://agriscienceindia.com/api/MasterDetailV2/";
     private String Methods = "CropList?";
     private String KEY_ZONEID = "ZoneId";
     private String KEY_YARDID = "YardId";
@@ -106,6 +111,7 @@ public class BajarBhavCropListFragment extends Fragment {
     private DisplayImageOptions optionsAdBanner;
     private ImageLoaderConfiguration config;
     private DisplayImageOptions options;
+    private LayoutInflater inflater;
 
     public BajarBhavCropListFragment() {
         // Required empty public constructor
@@ -159,7 +165,7 @@ public class BajarBhavCropListFragment extends Fragment {
 
         optionsAdBanner = new DisplayImageOptions.Builder()
                 .build();
-
+        this.inflater =inflater;
         imageLoader = ImageLoader.getInstance();
         initLoader(getActivity());
         getBajarBhavCropDetailListArrayList = new ArrayList<BajarBhavCropListDetailModel>();
@@ -295,12 +301,53 @@ public class BajarBhavCropListFragment extends Fragment {
                 } else {
                     ivAdsSamachar.setVisibility(View.GONE);
                 }
+                ivAdsSamachar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        setAdvClick(getBajarBhavCropDetailListArrayList.get(0));
+                    }
+                });
+
             }catch (Exception e){
                 e.printStackTrace();
             }
 
             }
 
+    }
+
+    private void setAdvClick(final BajarBhavCropListDetailModel samacharModel) {
+        if (samacharModel != null) {
+            if (samacharModel.getContactNo().trim().length() > 0) {
+                Intent intent = new Intent(Intent.ACTION_DIAL);
+                intent.setData(Uri.parse("tel:" + samacharModel.getContactNo().trim()));
+                startActivity(intent);
+            } else if (samacharModel.getPopup().trim().length() > 0) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setPositiveButton("Close", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                final AlertDialog dialog = builder.create();
+
+                View dialogLayout = inflater.inflate(R.layout.detail_adv_dialog_layout, null);
+                dialog.setView(dialogLayout);
+                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+                dialog.setOnShowListener(new DialogInterface.OnShowListener() {
+                    @Override
+                    public void onShow(DialogInterface d) {
+                        ImageView image = (ImageView) dialog.findViewById(R.id.goProDialogImage);
+//                        imageLoader.displayImage(samacharModel.getPopup().trim(), image, optionsAdBanner);
+                        System.out.println("Popup: 11- " + samacharModel.getPopup().trim());
+                        Glide.with(getActivity()).load(samacharModel.getPopup().trim()).into(image);
+                    }
+                });
+                dialog.show();
+            }
+        }
     }
 
     public static String stringToDate(String strdate, String format) {

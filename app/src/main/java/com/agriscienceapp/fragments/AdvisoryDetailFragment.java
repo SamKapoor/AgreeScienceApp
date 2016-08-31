@@ -1,8 +1,12 @@
 package com.agriscienceapp.fragments;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -12,6 +16,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -20,9 +25,11 @@ import android.widget.Toast;
 import com.agriscienceapp.R;
 import com.agriscienceapp.font.AgriScienceTextView;
 import com.agriscienceapp.font.FontUtils;
+import com.agriscienceapp.model.Detail;
 import com.agriscienceapp.model.KrushiSalahAdvisoryDetailSecondModel;
 import com.agriscienceapp.webservice.AndroidNetworkUtility;
 import com.androidquery.AQuery;
+import com.bumptech.glide.Glide;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
@@ -60,7 +67,7 @@ public class AdvisoryDetailFragment extends Fragment {
     @Bind(R.id.iv_ads_advisory_detail)
     ImageView ivAdsAdvisoryDetail;
 
-    private String BASEURL = "http://agriscienceindia.com/api/MasterDetail/";
+    private String BASEURL = "http://agriscienceindia.com/api/MasterDetailV2/";
     private String Methods = "AdvisoryDetail?";
     private String KEY_ADVISEID = "AdviseId";
 
@@ -75,6 +82,7 @@ public class AdvisoryDetailFragment extends Fragment {
 
     private int AdviseId = 0;
     int getPosition = 0;
+    private LayoutInflater inflater;
 
     public AdvisoryDetailFragment() {
         // Required empty public constructor
@@ -86,6 +94,7 @@ public class AdvisoryDetailFragment extends Fragment {
         AdvisoryDetailView = inflater.inflate(R.layout.fragment_advisory_detail, container, false);
         ButterKnife.bind(this, AdvisoryDetailView);
 
+        this.inflater = inflater;
         aq = new AQuery(getActivity());
 
         imageLoader = ImageLoader.getInstance();
@@ -207,8 +216,48 @@ public class AdvisoryDetailFragment extends Fragment {
                 } else {
                     ll_advisory_image_second.setVisibility(View.GONE);
                 }
+                ivAdsAdvisoryDetail.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        setAdvClick(krushiSalahAdvisoryDetailSecondModel);
+                    }
+                });
             }catch (Exception e){
 
+            }
+        }
+    }
+
+    private void setAdvClick(final KrushiSalahAdvisoryDetailSecondModel samacharModel) {
+        if (samacharModel != null) {
+            if (samacharModel.getContactNo().trim().length() > 0) {
+                Intent intent = new Intent(Intent.ACTION_DIAL);
+                intent.setData(Uri.parse("tel:" + samacharModel.getContactNo().trim()));
+                startActivity(intent);
+            } else if (samacharModel.getPopup().trim().length() > 0) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setPositiveButton("Close", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                final AlertDialog dialog = builder.create();
+
+                View dialogLayout = inflater.inflate(R.layout.detail_adv_dialog_layout, null);
+                dialog.setView(dialogLayout);
+                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+                dialog.setOnShowListener(new DialogInterface.OnShowListener() {
+                    @Override
+                    public void onShow(DialogInterface d) {
+                        ImageView image = (ImageView) dialog.findViewById(R.id.goProDialogImage);
+//                        imageLoader.displayImage(samacharModel.getPopup().trim(), image, optionsAdBanner);
+                        System.out.println("Popup: 11- " + samacharModel.getPopup().trim());
+                        Glide.with(getActivity()).load(samacharModel.getPopup().trim()).into(image);
+                    }
+                });
+                dialog.show();
             }
         }
     }

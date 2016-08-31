@@ -10,6 +10,25 @@ public class KrushiSalahAdvisoryDetailSecondModel {
     private String Photo;
     private String Thumbs;
     private String DetailAdd;
+    private String ContactNo;
+    private String Popup;
+
+    public String getContactNo() {
+        return ContactNo;
+    }
+
+    public void setContactNo(String contactNo) {
+        ContactNo = contactNo;
+    }
+
+    public String getPopup() {
+        return Popup;
+    }
+
+    public void setPopup(String popup) {
+        Popup = popup;
+    }
+
     public String getDetailAdd() {
         return DetailAdd;
     }

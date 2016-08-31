@@ -44,7 +44,7 @@ public class BajarBhavYardListFragment extends Fragment {
     @Bind(R.id.tv_bajar_yard_title)
     TextView tv_bajar_yard_title;
 
-    private String BASEURL = "http://agriscienceindia.com/api/MasterDetail/";
+    private String BASEURL = "http://agriscienceindia.com/api/MasterDetailV2/";
     private String Methods = "YardList?";
     private String KEY_ZONEID = "ZoneId";
 
