@@ -2,6 +2,8 @@ package com.agriscienceapp.webservice;
 
 import com.agriscienceapp.model.AgriScienceTVModel;
 import com.agriscienceapp.model.BajarBhavZoneListModel;
+import com.agriscienceapp.model.CommodityDetail;
+import com.agriscienceapp.model.DistrictDetail;
 import com.agriscienceapp.model.KhedutSafalGathaModel;
 import com.agriscienceapp.model.KrushiSalahAdvisoryModel;
 import com.agriscienceapp.model.KrushiSalahModel;
@@ -9,6 +11,7 @@ import com.agriscienceapp.model.PakPasandCropModel;
 import com.agriscienceapp.model.PakPasandModel;
 import com.agriscienceapp.model.PakPasandYardModel;
 import com.agriscienceapp.model.SamacharModel;
+import com.agriscienceapp.model.TalukaDetail;
 import com.agriscienceapp.model.UtaraModel;
 
 import retrofit.Callback;
@@ -21,7 +24,10 @@ import retrofit.http.Query;
 public interface APICallMethods {
 
 
-    //   @GET("/users/{username}")
+//       @GET("/DistrictList/")
+//       public void getdistrictList(Callback<DistrictModel> response);
+
+// @GET("/DistrictList/{username}")
 //   Call<User> getUser(@Path("username") String username);
 
     @POST("/NewsList/")
@@ -62,7 +68,14 @@ public interface APICallMethods {
     @POST("/PakPasand/")
     public void getPakPasand(@Query("CropId") String CropId, @Query("YardId") int YardId, Callback<PakPasandModel> response);
 
+    @POST("/DistrictList/")
+    public void getDistrictList(Callback<DistrictDetail> response);
 
+    @POST("/TalukaList/")
+    public void getTalukaList(@Query("DistID") String DistId, Callback<TalukaDetail> response);
+
+    @POST("/CommodityList/")
+    public void getCommodityList(Callback<CommodityDetail> response);
 }
 // @GET("/Newslist/{NewslistDetail}")
 // public void getSamacharDescription(@Path("NewslistDetail")String NewslistDetail, Callback<SamacharDescriptionModel> cb);

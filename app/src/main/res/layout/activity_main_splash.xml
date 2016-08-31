@@ -99,6 +99,90 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/llcommodity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:weightSum="2"
+                android:orientation="horizontal">
+
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Pak"
+                    android:layout_weight="0.8"
+                    android:layout_gravity="center_vertical"
+                    android:textColor="@android:color/black"
+                    android:textSize="20sp" />
+
+                <Spinner
+                    android:id="@+id/spinner_pak"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_margin="3dp"
+                    android:layout_weight="1.2"
+                    android:dropDownSelector="@color/green" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llJillo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:weightSum="2"
+                android:orientation="horizontal">
+
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Jillo"
+                    android:layout_weight="0.8"
+                    android:layout_gravity="center_vertical"
+                    android:textColor="@android:color/black"
+                    android:textSize="20sp" />
+
+                <Spinner
+                    android:id="@+id/spinner_jillo"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_margin="3dp"
+                    android:layout_weight="1.2"
+                    android:dropDownSelector="@color/green" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llTaluko"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:weightSum="2"
+                android:orientation="horizontal">
+
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Taluko"
+                    android:layout_weight="0.8"
+                    android:layout_gravity="center_vertical"
+                    android:textColor="@android:color/black"
+                    android:textSize="20sp" />
+
+                <Spinner
+                    android:id="@+id/spinner_taluko"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_margin="3dp"
+                    android:layout_weight="1.2"
+                    android:dropDownSelector="@color/green" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:id="@+id/llterms"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

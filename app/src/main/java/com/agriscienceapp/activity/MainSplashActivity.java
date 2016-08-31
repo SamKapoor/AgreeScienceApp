@@ -13,11 +13,16 @@ import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,11 +30,24 @@ import com.agriscienceapp.R;
 import com.agriscienceapp.common.ConnectivityDetector;
 import com.agriscienceapp.common.Consts;
 import com.agriscienceapp.common.Installation;
+import com.agriscienceapp.common.Utility;
+import com.agriscienceapp.font.AgriScienceTextView;
 import com.agriscienceapp.font.FontUtils;
+import com.agriscienceapp.fragments.PakPasandFragment;
+import com.agriscienceapp.model.CommodityDetail;
+import com.agriscienceapp.model.CommodityModel;
+import com.agriscienceapp.model.DistrictDetail;
+import com.agriscienceapp.model.DistrictModel;
+import com.agriscienceapp.model.PakPasandCropDetailModel;
+import com.agriscienceapp.model.PakPasandCropModel;
+import com.agriscienceapp.model.PakPasandYardDetailModel;
+import com.agriscienceapp.model.TalukaDetail;
+import com.agriscienceapp.model.TalukaModel;
 import com.agriscienceapp.model.TermsAndConditons;
 import com.agriscienceapp.webservice.AndroidNetworkUtility;
 import com.agriscienceapp.webservice.GetJsonWithCallBack;
 import com.agriscienceapp.webservice.OnUpdateListener;
+import com.agriscienceapp.webservice.RestClientRetroFit;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
@@ -42,6 +60,14 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 public class MainSplashActivity extends AppCompatActivity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
 
@@ -68,6 +94,13 @@ public class MainSplashActivity extends AppCompatActivity implements View.OnClic
 
     private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
     public static final String REG_ID = "regId";
+    private Spinner spinnerPak, spinnerTaluko, spinnerJillo;
+    private ArrayList<DistrictModel> getDistrictArrayList;
+    private boolean changed = true;
+    private ArrayList<CommodityModel> getCommodityArrayList;
+    private ArrayList<TalukaModel> getTalukaArrayList;
+    private int cropId, distId, taluId;
+    private String cropName, distName, taluName;
 //    public static final String EMAIL_ID = "eMailId";
 
 
@@ -100,27 +133,150 @@ public class MainSplashActivity extends AppCompatActivity implements View.OnClic
             finish();
         }
 
-//
-//        if (Installation.isFirstLaunch(this)) {
-//            Log.i("FIRST", "FIRST");
-//            callAppsUserInsertService();
-//        } else {
-//            Log.i("Allready REG user", "Allready REG user");
-//
-//            Intent intentLogin = new Intent(getApplicationContext(), HomeActivity.class);
-//            startActivity(intentLogin);
-//            finish();
-//
-//        }
-//
-
         dialog = new Dialog(MainSplashActivity.this);
         dialog.setContentView(R.layout.dialog_terms);
 
         getIDs();
         setLitner();
 
+        getData();
 
+    }
+
+    private void getData() {
+        if (!prgDialog.isShowing())
+            prgDialog.show();
+        getCommodity();
+        getDistrict();
+
+
+        try {
+            spinnerPak.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    CommodityModel clickedObj = (CommodityModel) parent.getItemAtPosition(position);
+                    cropId = clickedObj.getCropId();
+                    cropName = clickedObj.getCropName();
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+
+                }
+            });
+
+            spinnerJillo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    DistrictModel clickedObj = (DistrictModel) parent.getItemAtPosition(position);
+                    getTalukaList(clickedObj.getDistID() + "");
+                    distId = clickedObj.getDistID();
+                    distName = clickedObj.getDistName();
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+
+                }
+            });
+
+            spinnerTaluko.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    TalukaModel clickedObj = (TalukaModel) parent.getItemAtPosition(position);
+                    taluId = clickedObj.getTaluID();
+                    taluName = clickedObj.getTaluName();
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void getCommodity() {
+        if (Utility.isConnectingToInternet(this)) {
+            RestClientRetroFit.getWebServices().getCommodityList(new Callback<CommodityDetail>() {
+
+                @Override
+                public void success(CommodityDetail commodityDetail, Response response) {
+                    getCommodityArrayList = (ArrayList<CommodityModel>) commodityDetail.getDetail();
+                    if (prgDialog.isShowing())
+                        prgDialog.hide();
+                    if (getCommodityArrayList != null && getCommodityArrayList.size() > 0) {
+                        CustomBaseAdapterCommodity customBaseAdapterCommodity = new CustomBaseAdapterCommodity(MainSplashActivity.this, getCommodityArrayList);
+                        spinnerPak.setAdapter(customBaseAdapterCommodity);
+                    }
+                }
+
+                @Override
+                public void failure(RetrofitError error) {
+                }
+            });
+        } else {
+            Toast.makeText(this, "No internet Connection.", Toast.LENGTH_SHORT).show();
+            if (prgDialog.isShowing())
+                prgDialog.hide();
+        }
+    }
+
+    private void getDistrict() {
+        if (Utility.isConnectingToInternet(this)) {
+            RestClientRetroFit.getWebServices().getDistrictList(new Callback<DistrictDetail>() {
+
+                @Override
+                public void success(DistrictDetail districtDetail, Response response) {
+                    getDistrictArrayList = (ArrayList<DistrictModel>) districtDetail.getDetail();
+                    if (getDistrictArrayList != null && getDistrictArrayList.size() > 0) {
+                        CustomBaseAdapterDistrict customBaseAdapterDistrict = new CustomBaseAdapterDistrict(MainSplashActivity.this, getDistrictArrayList);
+                        spinnerJillo.setAdapter(customBaseAdapterDistrict);
+                    }
+                }
+
+                @Override
+                public void failure(RetrofitError error) {
+                }
+            });
+        } else {
+            Toast.makeText(this, "No internet Connection.", Toast.LENGTH_SHORT).show();
+            if (prgDialog.isShowing())
+                prgDialog.hide();
+        }
+    }
+
+    private void getTalukaList(String distId) {
+        if (Utility.isConnectingToInternet(this)) {
+            RestClientRetroFit.getWebServices().getTalukaList(distId, new Callback<TalukaDetail>() {
+
+                @Override
+                public void success(TalukaDetail talukaDetail, Response response) {
+                    getTalukaArrayList = (ArrayList<TalukaModel>) talukaDetail.getDetail();
+                    if (prgDialog.isShowing())
+                        prgDialog.hide();
+                    if (getTalukaArrayList != null && getTalukaArrayList.size() > 0) {
+                        CustomBaseAdapterTaluko customBaseAdapterTaluko = new CustomBaseAdapterTaluko(MainSplashActivity.this, getTalukaArrayList);
+                        spinnerTaluko.setAdapter(customBaseAdapterTaluko);
+                    }
+                }
+
+                @Override
+                public void failure(RetrofitError error) {
+                    if (prgDialog.isShowing())
+                        prgDialog.hide();
+                }
+            });
+        } else {
+            Toast.makeText(this, "No internet Connection.", Toast.LENGTH_SHORT).show();
+            if (prgDialog.isShowing())
+                prgDialog.hide();
+        }
     }
 
     private void registerInBackground(final String emailID) {
@@ -167,7 +323,8 @@ public class MainSplashActivity extends AppCompatActivity implements View.OnClic
     }
 
     private void storeRegIdinServer() {
-        prgDialog.show();
+        if (!prgDialog.isShowing())
+            prgDialog.show();
         params.put("regId", regId);
 //        Log.d("Id------------", "--------------" + regId);
 
@@ -179,7 +336,7 @@ public class MainSplashActivity extends AppCompatActivity implements View.OnClic
                         // Hide Progress Dialog
                         prgDialog.hide();
 //                        if (prgDialog != null) {
-//                            prgDialog.dismiss();
+//                            prgDialog.hide();
 //                        }
 //                        Toast.makeText(applicationContext, "Reg Id shared successfully with Web App ",
 //                                Toast.LENGTH_LONG).show();
@@ -196,8 +353,8 @@ public class MainSplashActivity extends AppCompatActivity implements View.OnClic
                     public void onFailure(int statusCode, Throwable error,
                                           String content) {
                         prgDialog.hide();
-                        if (prgDialog != null) {
-                            prgDialog.dismiss();
+                        if (prgDialog != null && prgDialog.isShowing()) {
+                            prgDialog.hide();
                         }
                         if (statusCode == 404) {
 //                            Toast.makeText(applicationContext, "Requested resource not found", Toast.LENGTH_LONG).show();
@@ -243,6 +400,9 @@ public class MainSplashActivity extends AppCompatActivity implements View.OnClic
 
 
         try {
+            spinnerPak = (Spinner) findViewById(R.id.spinner_pak);
+            spinnerJillo = (Spinner) findViewById(R.id.spinner_jillo);
+            spinnerTaluko = (Spinner) findViewById(R.id.spinner_taluko);
             edtName = (EditText) findViewById(R.id.edtName);
             edtMobile = (EditText) findViewById(R.id.edtMobile);
             chekTerms = (CheckBox) findViewById(R.id.chekTerms);
@@ -284,7 +444,7 @@ public class MainSplashActivity extends AppCompatActivity implements View.OnClic
                         getAdvisoryDetails.execute();
                     } else {
                         Toast.makeText(MainSplashActivity.this, "Please Check Your Internet.", Toast.LENGTH_SHORT).show();
-//                    progress.dismiss();
+//                    progress.hide();
                     }
                 }
             });
@@ -318,10 +478,9 @@ public class MainSplashActivity extends AppCompatActivity implements View.OnClic
                     } else if (edtMobile.getText().toString().length() >= 12) {
                         edtMobile.setFocusable(true);
                         Toast.makeText(getApplicationContext(), "Enter Maximum 12 Digits Mobile Number", Toast.LENGTH_SHORT).show();
-                    } else if (!chekTerms.isChecked()){
+                    } else if (!chekTerms.isChecked()) {
                         Toast.makeText(getApplicationContext(), "Please check terms & conditions.", Toast.LENGTH_SHORT).show();
-                    }
-                    else {
+                    } else {
 
                         registerInBackground(regId);
 
@@ -385,7 +544,7 @@ public class MainSplashActivity extends AppCompatActivity implements View.OnClic
                                     e.printStackTrace();
                                 }
                             }
-                        });
+                        }, cropId, distId, taluId);
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
                     getJsonWithCallBackFragment.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
@@ -428,14 +587,14 @@ public class MainSplashActivity extends AppCompatActivity implements View.OnClic
                     getAdvisoryDetails.execute();
                 } else {
                     Toast.makeText(MainSplashActivity.this, "Please Check Your Internet.", Toast.LENGTH_SHORT).show();
-//                    progress.dismiss();
+//                    progress.hide();
                 }
 
 
             } else {
                 if (isChecked == true) {
                     chekTerms.setChecked(false);
-                    dialog.dismiss();
+                    dialog.hide();
                 }
 
             }*/
@@ -476,7 +635,7 @@ public class MainSplashActivity extends AppCompatActivity implements View.OnClic
         protected Void doInBackground(Void... params) {
 
             HttpPost httpGet = new HttpPost(APIURL_CALL);
-            Log.i("APIURL_CALL","APIURL_CALL");
+            Log.i("APIURL_CALL", "APIURL_CALL");
             //setting header to request for a JSON response
             httpGet.setHeader("Accept", "application/json");
             AndroidNetworkUtility httpUtil = new AndroidNetworkUtility();
@@ -518,7 +677,7 @@ public class MainSplashActivity extends AppCompatActivity implements View.OnClic
 
             if (progress != null) {
                 if (progress.isShowing()) {
-                    progress.dismiss();
+                    progress.hide();
                 }
             }
 
@@ -538,6 +697,202 @@ public class MainSplashActivity extends AppCompatActivity implements View.OnClic
 
             }
             dialog.show();
+        }
+    }
+
+
+    public class CustomBaseAdapterDistrict extends BaseAdapter {
+        Context context;
+        List<DistrictModel> rowItems;
+        LayoutInflater mInflater;
+
+        public CustomBaseAdapterDistrict(Context context, ArrayList<DistrictModel> items) {
+            mInflater = (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
+            this.context = context;
+            this.rowItems = items;
+        }
+
+        @Override
+        public int getCount() {
+            return rowItems.size();
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return rowItems.get(position);
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            ViewHolder holder = null;
+
+            if (convertView == null) {
+                convertView = mInflater.inflate(R.layout.row_spinner_yard, null);
+                holder = new ViewHolder(convertView);
+                convertView.setTag(holder);
+            } else {
+                holder = (ViewHolder) convertView.getTag();
+            }
+
+            try {
+                if (!TextUtils.isEmpty(getDistrictArrayList.get(position).getDistName())) {
+                    holder.tvRowSpinnerYard.setText(getDistrictArrayList.get(position).getDistName());
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return convertView;
+        }
+
+        /**
+         * This class contains all butterknife-injected Views & Layouts from layout file 'row_spinner_yard.xml'
+         * for easy to all layout elements.
+         *
+         * @author ButterKnifeZelezny, plugin for Android Studio by Avast Developers (http://github.com/avast)
+         */
+
+        class ViewHolder {
+            @Bind(R.id.tv_row_spinner_yard)
+            AgriScienceTextView tvRowSpinnerYard;
+
+            ViewHolder(View view) {
+                ButterKnife.bind(this, view);
+            }
+        }
+    }
+
+    public class CustomBaseAdapterTaluko extends BaseAdapter {
+        Context context;
+        List<TalukaModel> rowItems;
+        LayoutInflater mInflater;
+
+        public CustomBaseAdapterTaluko(Context context, ArrayList<TalukaModel> items) {
+            mInflater = (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
+            this.context = context;
+            this.rowItems = items;
+        }
+
+        @Override
+        public int getCount() {
+            return rowItems.size();
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return rowItems.get(position);
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            ViewHolder holder = null;
+
+            if (convertView == null) {
+                convertView = mInflater.inflate(R.layout.row_spinner_yard, null);
+                holder = new ViewHolder(convertView);
+                convertView.setTag(holder);
+            } else {
+                holder = (ViewHolder) convertView.getTag();
+            }
+
+            try {
+                if (!TextUtils.isEmpty(getTalukaArrayList.get(position).getTaluName())) {
+                    holder.tvRowSpinnerYard.setText(getTalukaArrayList.get(position).getTaluName());
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return convertView;
+        }
+
+        /**
+         * This class contains all butterknife-injected Views & Layouts from layout file 'row_spinner_yard.xml'
+         * for easy to all layout elements.
+         *
+         * @author ButterKnifeZelezny, plugin for Android Studio by Avast Developers (http://github.com/avast)
+         */
+
+        class ViewHolder {
+            @Bind(R.id.tv_row_spinner_yard)
+            AgriScienceTextView tvRowSpinnerYard;
+
+            ViewHolder(View view) {
+                ButterKnife.bind(this, view);
+            }
+        }
+    }
+
+    public class CustomBaseAdapterCommodity extends BaseAdapter {
+        Context context;
+        List<CommodityModel> rowItems;
+        LayoutInflater mInflater;
+
+        public CustomBaseAdapterCommodity(Context context, ArrayList<CommodityModel> items) {
+            mInflater = (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
+            this.context = context;
+            this.rowItems = items;
+        }
+
+        @Override
+        public int getCount() {
+            return rowItems.size();
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return rowItems.get(position);
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            ViewHolder holder = null;
+
+            if (convertView == null) {
+                convertView = mInflater.inflate(R.layout.row_spinner_yard, null);
+                holder = new ViewHolder(convertView);
+                convertView.setTag(holder);
+            } else {
+                holder = (ViewHolder) convertView.getTag();
+            }
+
+            try {
+                if (!TextUtils.isEmpty(getCommodityArrayList.get(position).getCropName())) {
+                    holder.tvRowSpinnerYard.setText(getCommodityArrayList.get(position).getCropName());
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return convertView;
+        }
+
+        /**
+         * This class contains all butterknife-injected Views & Layouts from layout file 'row_spinner_yard.xml'
+         * for easy to all layout elements.
+         *
+         * @author ButterKnifeZelezny, plugin for Android Studio by Avast Developers (http://github.com/avast)
+         */
+
+        class ViewHolder {
+            @Bind(R.id.tv_row_spinner_yard)
+            AgriScienceTextView tvRowSpinnerYard;
+
+            ViewHolder(View view) {
+                ButterKnife.bind(this, view);
+            }
         }
     }
 }

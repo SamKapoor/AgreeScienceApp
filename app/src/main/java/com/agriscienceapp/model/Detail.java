@@ -18,6 +18,8 @@ public class Detail {
     private int UpdatedBy;
     private String UpdatedDate;
     private String MainAdd;
+    private String ContactNo;
+    private String Popup;
 
     private int IsExist;
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();

@@ -26,9 +26,10 @@ public class GetJsonWithCallBack extends
     private String strMobilNo;
     private String strDeviceID;
     private String TokenId;
+    int cropId, distId, taluId;
 
     public GetJsonWithCallBack(Activity context, JSONObject jsonObject,
-                               String TokenId, String strName, String strMobilNo, String strDeviceID, int intDialogShow, OnUpdateListener onUpdateListener) {
+                               String TokenId, String strName, String strMobilNo, String strDeviceID, int intDialogShow, OnUpdateListener onUpdateListener, int cropId, int distId, int taluId) {
 
 
         this.onUpdateListener = onUpdateListener;
@@ -39,6 +40,9 @@ public class GetJsonWithCallBack extends
         this.strDeviceID = strDeviceID;
         this.intDialogShow = intDialogShow;
         this.activity = context;
+        this.cropId = cropId;
+        this.distId = distId;
+        this.taluId = taluId;
     }
 
     @Override
@@ -65,7 +69,7 @@ public class GetJsonWithCallBack extends
             JSONParser jsonParser = new JSONParser();
 //            getJsonObject = jsonParser.getJSONFromUrl("http://agriscienceindia.com/api/MasterDetail/AppsUserInsert", jsonObject);
 
-            getJsonObject = jsonParser.getJSONFromUrl("http://agriscienceindia.com/api/MasterDetail/AppsUserInsert?TokenId=" + URLEncoder.encode(TokenId) + "&DeviceID=" + URLEncoder.encode(strDeviceID) + "&UserName=" + URLEncoder.encode(strName).toString().trim() + "&MobileNo=" + strMobilNo.toString().trim());
+            getJsonObject = jsonParser.getJSONFromUrl("http://agriscienceindia.com/api/MasterDetail/AppsUserInsert?TokenId=" + URLEncoder.encode(TokenId) + "&DeviceID=" + URLEncoder.encode(strDeviceID) + "&UserName=" + URLEncoder.encode(strName).toString().trim() + "&MobileNo=" + strMobilNo.toString().trim()+ "&CropId=" + cropId+ "&DistID=" + distId+ "&TaluID=" + taluId);
 
 
         } catch (Exception e) {
