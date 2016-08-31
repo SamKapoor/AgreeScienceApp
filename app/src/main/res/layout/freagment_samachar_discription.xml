@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView
-    android:layout_height="match_parent"
-    android:layout_width="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <RelativeLayout
         android:id="@+id/rl_samachar_detail_main"
@@ -14,51 +14,52 @@
             android:id="@+id/tv_samachar_detail_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text=""
-            app:typeface="2"
-            android:textColor="@android:color/black"
-            android:maxLines="2"
-            android:textSize="20sp"
-            android:layout_marginTop="10dp"
+            android:layout_marginEnd="5dp"
             android:layout_marginStart="10dp"
-            android:layout_marginEnd="5dp"/>
+            android:layout_marginTop="10dp"
+            android:maxLines="2"
+            android:text=""
+            android:textColor="@android:color/black"
+            android:textSize="20sp"
+            app:typeface="2" />
 
         <LinearLayout
             android:id="@+id/rl_timeline"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="2"
-            android:layout_below="@+id/tv_samachar_detail_title">
-        <TextView
-            android:id="@+id/timeline_samachar_detail"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1.7"
-            android:textSize="12dp"
-            android:layout_gravity="center_vertical"
-            android:textColor="@android:color/black"
-            android:text=""
-            android:layout_marginStart="10dp"/>
-
-        <TextView
-            android:id="@+id/date_samachar_detail"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@android:color/black"
             android:layout_below="@+id/tv_samachar_detail_title"
-           android:layout_toRightOf="@+id/timeline_samachar_detail"
-            android:text=""
-            android:visibility="gone"
-            android:layout_marginStart="10dp"/>
+            android:orientation="horizontal"
+            android:weightSum="2">
 
-        <ImageView
-            android:id="@+id/iv_share_samachar_detail"
-            android:layout_width="0dp"
-            android:layout_height="25dp"
-            android:layout_weight="0.3"
-            android:src="@drawable/share_round"
-            android:layout_gravity="end"/>
+            <TextView
+                android:id="@+id/timeline_samachar_detail"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="10dp"
+                android:layout_weight="1.7"
+                android:text=""
+                android:textColor="@android:color/black"
+                android:textSize="12dp" />
+
+            <TextView
+                android:id="@+id/date_samachar_detail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_samachar_detail_title"
+                android:layout_marginStart="10dp"
+                android:layout_toRightOf="@+id/timeline_samachar_detail"
+                android:text=""
+                android:textColor="@android:color/black"
+                android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/iv_share_samachar_detail"
+                android:layout_width="0dp"
+                android:layout_height="25dp"
+                android:layout_gravity="end"
+                android:layout_weight="0.3"
+                android:src="@drawable/share_round" />
 
         </LinearLayout>
 
@@ -67,18 +68,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/rl_timeline"
-            android:layout_marginTop="10dp"
-            android:layout_margin="5dp">
+            android:layout_margin="5dp"
+            android:layout_marginTop="10dp">
 
             <ImageView
                 android:id="@+id/iv_Samachar_detail_first"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="5dp"
                 android:minHeight="200dp"
                 android:minWidth="150dp"
-                android:scaleType="fitXY"
-                android:layout_marginTop="5dp"
-                android:layout_centerInParent="true" />
+                android:scaleType="fitXY" />
 
             <ProgressBar
                 android:id="@+id/progressbar_samachar_detail_first"
@@ -86,7 +87,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:layout_marginTop="10dp"
-                android:visibility="visible"/>
+                android:visibility="visible" />
         </RelativeLayout>
 
         <com.agriscienceapp.font.AgriScienceTextView
@@ -94,17 +95,40 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/rl_samachar_image_first"
-            android:text=""
             android:layout_margin="10dp"
+            android:layout_marginTop="10dp"
+            android:text=""
             android:textColor="@android:color/black"
-            app:typeface="1"
             android:textSize="18sp"
-            android:layout_marginTop="10dp" />
+            app:typeface="1" />
+
+        <ImageView
+            android:id="@+id/iv_Samachar_detail_second_adv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_samachar_detail_discription"
+            android:layout_marginTop="10dp"
+            android:maxHeight="100dp"
+            android:minHeight="100dp"
+            android:padding="5dp"
+            android:scaleType="fitXY" />
+
+        <com.agriscienceapp.font.AgriScienceTextView
+            android:id="@+id/tv_samachar_detail_discription2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/iv_Samachar_detail_second_adv"
+            android:layout_margin="10dp"
+            android:layout_marginTop="10dp"
+            android:text=""
+            android:textColor="@android:color/black"
+            android:textSize="18sp"
+            app:typeface="1" />
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tv_samachar_detail_discription"
+            android:layout_below="@+id/tv_samachar_detail_discription2"
             android:layout_marginTop="10dp">
 
             <ProgressBar
@@ -112,18 +136,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:visibility="visible"/>
+                android:visibility="visible" />
 
             <ImageView
                 android:id="@+id/iv_Samachar_detail_second"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="10dp"
                 android:maxHeight="100dp"
                 android:minHeight="100dp"
                 android:padding="5dp"
-                android:scaleType="fitXY"
-                android:layout_marginTop="10dp"
-                android:layout_centerInParent="true" />
+                android:scaleType="fitXY" />
 
         </RelativeLayout>
 

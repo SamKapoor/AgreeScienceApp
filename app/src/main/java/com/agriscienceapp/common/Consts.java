@@ -14,11 +14,11 @@ public class Consts {
     public static final long SPLASH_TIMEOUT = 8000;
 
 
-    public static final String BASEURL = "http://agriscienceindia.com/api/MasterDetail";
+    public static final String BASEURL = "http://agriscienceindia.com/api/MasterDetailV2";
 
 
     //    public static final String APP_SERVER_URL = "http://gcm-alert.appspot.com/";
-    public static final String APP_SERVER_URL = "http://agriscienceindia.com/api/MasterDetail/NewsList/";
+    public static final String APP_SERVER_URL = "http://agriscienceindia.com/api/MasterDetailV2/NewsList/";
 
     //    private String NOTIFICATION_BASEURL = "http://agriscienceindia.com/api/MasterDetail/NewslistDetail";
 //    public static final String GOOGLE_PROJ_ID = "100427104607";

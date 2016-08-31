@@ -1,9 +1,12 @@
 package com.agriscienceapp.fragments;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -13,6 +16,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -23,6 +27,7 @@ import com.agriscienceapp.R;
 import com.agriscienceapp.activity.HomeActivity;
 import com.agriscienceapp.font.AgriScienceTextView;
 import com.agriscienceapp.font.FontUtils;
+import com.agriscienceapp.model.Detail;
 import com.agriscienceapp.model.SamacharDetailDescModel;
 import com.agriscienceapp.webservice.AndroidNetworkUtility;
 import com.androidquery.AQuery;
@@ -56,10 +61,14 @@ public class SamacharDetailFragment extends Fragment {
     RelativeLayout rlSamacharImageFirst;
     @Bind(R.id.tv_samachar_detail_discription)
     AgriScienceTextView tvSamacharDetailDiscription;
+    @Bind(R.id.tv_samachar_detail_discription2)
+    AgriScienceTextView tvSamacharDetailDiscription2;
     @Bind(R.id.progressbar_samachar_detail_second)
     ProgressBar progressbarSamacharDetailSecond;
     @Bind(R.id.iv_Samachar_detail_second)
     ImageView ivSamacharDetailSecond;
+    @Bind(R.id.iv_Samachar_detail_second_adv)
+    ImageView ivSamacharDetailSecondAdv;
     @Bind(R.id.rl_samachar_detail_main)
     RelativeLayout rlSamacharDetailMain;
 
@@ -78,6 +87,7 @@ public class SamacharDetailFragment extends Fragment {
     int getPosition = 0;
 
     public AQuery aq;
+    private LayoutInflater inflater;
 
     public SamacharDetailFragment() {
         // Required empty public constructor
@@ -87,6 +97,7 @@ public class SamacharDetailFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        this.inflater = inflater;
         //Layout is used Relative
         SamacharView = inflater.inflate(R.layout.freagment_samachar_discription, container, false);
         ButterKnife.bind(this, SamacharView);
@@ -111,7 +122,7 @@ public class SamacharDetailFragment extends Fragment {
 
                 APICALL_URL = BASEURL + Methods + KEY_NEWSID + "=" + NewsId; // Pass news id insteadof of 5.
             }
-        }catch (Exception e){
+        } catch (Exception e) {
 
         }
         Log.e("Request: ", "" + APICALL_URL);
@@ -139,7 +150,7 @@ public class SamacharDetailFragment extends Fragment {
                 // what to do with it.
 
                 FontUtils.setFontForText(getActivity(), tvSamacharDetailTitle, "bold");
-                String extraText = tvSamacharDetailTitle.getText().toString() + "...ખેતીની વધુ માહિતી અને બજારભાવ માટે ડાઉનલોડ કરો ઍગ્રીસાયન્સ કૃષિ માહિતી અપ્લિકેશન.  " +"https://play.google.com/store/apps/details?id=com.agriscienceapp";
+                String extraText = tvSamacharDetailTitle.getText().toString() + "...ખેતીની વધુ માહિતી અને બજારભાવ માટે ડાઉનલોડ કરો ઍગ્રીસાયન્સ કૃષિ માહિતી અપ્લિકેશન.  " + "https://play.google.com/store/apps/details?id=com.agriscienceapp";
                 share.putExtra(Intent.EXTRA_SUBJECT, "Title Of The Post");
                 share.putExtra(Intent.EXTRA_TEXT, extraText);
                 startActivity(Intent.createChooser(share, "Share link!"));
@@ -199,9 +210,15 @@ public class SamacharDetailFragment extends Fragment {
                         samacharDetailDescModel.setNewsId(detailJson.getInt("NewsId"));
                         samacharDetailDescModel.setNewsTitle(detailJson.getString("NewsTitle"));
                         samacharDetailDescModel.setNewsDetail(detailJson.getString("NewsDetail"));
+                        samacharDetailDescModel.setNewsDetail2(detailJson.getString("NewsDetail2"));
                         samacharDetailDescModel.setNewsTimeline(detailJson.getString("NewsTimeline"));
                         samacharDetailDescModel.setDetailAdd(detailJson.getString("DetailAdd"));
+                        samacharDetailDescModel.setDetailMiddleAdd(detailJson.getString("DetailMiddleAdd"));
                         samacharDetailDescModel.setPhoto(detailJson.getString("Photo"));
+                        samacharDetailDescModel.setContactNo(detailJson.getString("ContactNo"));
+                        samacharDetailDescModel.setContactNo2(detailJson.getString("ContactNo2"));
+                        samacharDetailDescModel.setPopup(detailJson.getString("Popup"));
+                        samacharDetailDescModel.setPopup2(detailJson.getString("Popup2"));
                     }
                 }
 
@@ -221,29 +238,116 @@ public class SamacharDetailFragment extends Fragment {
                 }
             }
 
-            try{
-            if (!TextUtils.isEmpty(samacharDetailDescModel.getNewsTitle())) {
-                FontUtils.setFontForText(mContext, tvSamacharDetailTitle, "bold");
-                tvSamacharDetailTitle.setText(samacharDetailDescModel.getNewsTitle());
-            }
-            if (!TextUtils.isEmpty(samacharDetailDescModel.getNewsDetail())) {
-                FontUtils.setFontForText(mContext, tvSamacharDetailDiscription, "regular");
-                tvSamacharDetailDiscription.setText(samacharDetailDescModel.getNewsDetail());
-            }
-            if (!TextUtils.isEmpty(samacharDetailDescModel.getNewsTimeline())) {
-                timelineSamacharDetail.setText(samacharDetailDescModel.getNewsTimeline());
-            }
-            if (!TextUtils.isEmpty(samacharDetailDescModel.getDetailAdd())) {
-                imageLoader.displayImage(samacharDetailDescModel.getDetailAdd(), ivSamacharDetailSecond);
-            }else{
-                ivSamacharDetailSecond.setVisibility(View.GONE);
-            }
-            if (!TextUtils.isEmpty(samacharDetailDescModel.getPhoto())) {
-                imageLoader.displayImage(samacharDetailDescModel.getPhoto(), ivSamacharDetailFirst);
-                aq.id(R.id.iv_Samachar_detail_first).progress(R.id.progressbar_samachar_detail_first).image(samacharDetailDescModel.getPhoto(), false, true);
-            }
-            }catch (Exception e){
+            try {
+                if (!TextUtils.isEmpty(samacharDetailDescModel.getNewsTitle())) {
+                    FontUtils.setFontForText(mContext, tvSamacharDetailTitle, "bold");
+                    tvSamacharDetailTitle.setText(samacharDetailDescModel.getNewsTitle());
+                }
+                if (!TextUtils.isEmpty(samacharDetailDescModel.getNewsDetail())) {
+                    FontUtils.setFontForText(mContext, tvSamacharDetailDiscription, "regular");
+                    tvSamacharDetailDiscription.setText(samacharDetailDescModel.getNewsDetail());
+                }
+                if (!TextUtils.isEmpty(samacharDetailDescModel.getNewsDetail2())) {
+                    FontUtils.setFontForText(mContext, tvSamacharDetailDiscription2, "regular");
+                    tvSamacharDetailDiscription2.setText(samacharDetailDescModel.getNewsDetail2());
+                }
+                if (!TextUtils.isEmpty(samacharDetailDescModel.getNewsTimeline())) {
+                    timelineSamacharDetail.setText(samacharDetailDescModel.getNewsTimeline());
+                }
+                if (!TextUtils.isEmpty(samacharDetailDescModel.getDetailAdd())) {
+                    imageLoader.displayImage(samacharDetailDescModel.getDetailAdd(), ivSamacharDetailSecond);
+                } else {
+                    ivSamacharDetailSecond.setVisibility(View.GONE);
+                }
+                if (!TextUtils.isEmpty(samacharDetailDescModel.getDetailMiddleAdd())) {
+                    imageLoader.displayImage(samacharDetailDescModel.getDetailMiddleAdd(), ivSamacharDetailSecondAdv);
+                } else {
+                    ivSamacharDetailSecondAdv.setVisibility(View.GONE);
+                }
+                ivSamacharDetailSecond.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        setAdvClick(samacharDetailDescModel);
+                    }
+                });
 
+                ivSamacharDetailSecondAdv.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        setMiddleAdvClick(samacharDetailDescModel);
+                    }
+                });
+                if (!TextUtils.isEmpty(samacharDetailDescModel.getPhoto())) {
+                    imageLoader.displayImage(samacharDetailDescModel.getPhoto(), ivSamacharDetailFirst);
+                    aq.id(R.id.iv_Samachar_detail_first).progress(R.id.progressbar_samachar_detail_first).image(samacharDetailDescModel.getPhoto(), false, true);
+                }
+            } catch (Exception e) {
+
+            }
+        }
+    }
+
+    private void setAdvClick(final SamacharDetailDescModel samacharModel) {
+        if (samacharModel != null) {
+            if (samacharModel.getContactNo().trim().length() > 0) {
+                Intent intent = new Intent(Intent.ACTION_DIAL);
+                intent.setData(Uri.parse("tel:" + samacharModel.getContactNo().trim()));
+                startActivity(intent);
+            } else if (samacharModel.getPopup().trim().length() > 0) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setPositiveButton("Close", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                final AlertDialog dialog = builder.create();
+
+                View dialogLayout = inflater.inflate(R.layout.detail_adv_dialog_layout, null);
+                dialog.setView(dialogLayout);
+                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+                dialog.show();
+
+                dialog.setOnShowListener(new DialogInterface.OnShowListener() {
+                    @Override
+                    public void onShow(DialogInterface d) {
+                        ImageView image = (ImageView) dialog.findViewById(R.id.goProDialogImage);
+                        imageLoader.displayImage(samacharModel.getPopup().trim(), image, options);
+                    }
+                });
+            }
+        }
+    }
+
+     private void setMiddleAdvClick(final SamacharDetailDescModel samacharModel) {
+        if (samacharModel != null) {
+            if (samacharModel.getContactNo2().trim().length() > 0) {
+                Intent intent = new Intent(Intent.ACTION_DIAL);
+                intent.setData(Uri.parse("tel:" + samacharModel.getContactNo2().trim()));
+                startActivity(intent);
+            } else if (samacharModel.getPopup2().trim().length() > 0) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setPositiveButton("Close", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                final AlertDialog dialog = builder.create();
+
+                View dialogLayout = inflater.inflate(R.layout.detail_adv_dialog_layout, null);
+                dialog.setView(dialogLayout);
+                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+                dialog.show();
+                dialog.setOnShowListener(new DialogInterface.OnShowListener() {
+                    @Override
+                    public void onShow(DialogInterface d) {
+                        ImageView image = (ImageView) dialog.findViewById(R.id.goProDialogImage);
+                        imageLoader.displayImage(samacharModel.getPopup2().trim(), image, options);
+                    }
+                });
             }
         }
     }

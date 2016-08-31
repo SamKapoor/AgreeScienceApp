@@ -2,9 +2,12 @@ package com.agriscienceapp.fragments;
 
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -14,6 +17,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -23,6 +27,7 @@ import com.agriscienceapp.R;
 import com.agriscienceapp.font.AgriScienceTextView;
 import com.agriscienceapp.font.FontUtils;
 import com.agriscienceapp.model.KheduSafalGathaDetailModel;
+import com.agriscienceapp.model.SamacharDetailDescModel;
 import com.agriscienceapp.webservice.AndroidNetworkUtility;
 import com.androidquery.AQuery;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -52,8 +57,12 @@ public class KhedutSafalGathaDetailFragment extends Fragment {
     RelativeLayout rlKhedutsafalgathaDescription;
     @Bind(R.id.tv_khedutsafalgatha_decsription_detail)
     AgriScienceTextView tvKhedutsafalgathaDecsriptionDetail;
+    @Bind(R.id.tv_khedutsafalgatha_decsription_detail2)
+    AgriScienceTextView tvKhedutsafalgathaDecsriptionDetail2;
     @Bind(R.id.iv_khedutsafalgatha_description_second)
     ImageView ivKhedutsafalgathaDescriptionSecond;
+    @Bind(R.id.iv_khedutsafalgatha_description_secondadv)
+    ImageView ivKhedutsafalgathaDescriptionSecondadv;
     @Bind(R.id.progressbar_khedutgatha_detail_second)
     ProgressBar progressbarKhedutgathaDetailSecond;
     @Bind(R.id.rl_khedutgatha_detail_main)
@@ -76,6 +85,7 @@ public class KhedutSafalGathaDetailFragment extends Fragment {
     int getPosition = 0;
 
     public AQuery aq;
+    private LayoutInflater inflater;
 
     public KhedutSafalGathaDetailFragment() {
         // Required empty public constructor
@@ -85,6 +95,7 @@ public class KhedutSafalGathaDetailFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        this.inflater = inflater;
         KhedutSafalGathaView = inflater.inflate(R.layout.fragment_khedut_safal_gatha_detail, container, false);
         ButterKnife.bind(this, KhedutSafalGathaView);
 
@@ -197,8 +208,14 @@ public class KhedutSafalGathaDetailFragment extends Fragment {
                         kheduSafalGathaDetailModel.setStoryId(detailJson.getInt("StoryId"));
                         kheduSafalGathaDetailModel.setStoryTitle(detailJson.getString("StoryTitle"));
                         kheduSafalGathaDetailModel.setDescription(detailJson.getString("Description"));
+                        kheduSafalGathaDetailModel.setDescription2(detailJson.getString("Description2"));
                         kheduSafalGathaDetailModel.setPhotoPath(detailJson.getString("PhotoPath"));
                         kheduSafalGathaDetailModel.setDetailAdd(detailJson.getString("DetailAdd"));
+                        kheduSafalGathaDetailModel.setDetailMiddleAdd(detailJson.getString("DetailMiddleAdd"));
+                        kheduSafalGathaDetailModel.setContactNo(detailJson.getString("ContactNo"));
+                        kheduSafalGathaDetailModel.setContactNo2(detailJson.getString("ContactNo2"));
+                        kheduSafalGathaDetailModel.setPopup(detailJson.getString("Popup"));
+                        kheduSafalGathaDetailModel.setPopup2(detailJson.getString("Popup2"));
                     }
                 }
             } catch (Exception e) {
@@ -225,6 +242,10 @@ public class KhedutSafalGathaDetailFragment extends Fragment {
                     FontUtils.setFontForText(mContext, tvKhedutsafalgathaDecsriptionDetail, "regular");
                     tvKhedutsafalgathaDecsriptionDetail.setText(kheduSafalGathaDetailModel.getDescription());
                 }
+                if (!TextUtils.isEmpty(kheduSafalGathaDetailModel.getDescription2())) {
+                    FontUtils.setFontForText(mContext, tvKhedutsafalgathaDecsriptionDetail2, "regular");
+                    tvKhedutsafalgathaDecsriptionDetail2.setText(kheduSafalGathaDetailModel.getDescription2());
+                }
                 if (!TextUtils.isEmpty(kheduSafalGathaDetailModel.getPhotoPath()) && !kheduSafalGathaDetailModel.getPhotoPath().equalsIgnoreCase("null")) {
                     imageLoader.displayImage(kheduSafalGathaDetailModel.getPhotoPath(), ivKhedutsafalgathaDescription);
                     aq.id(R.id.iv_khedutsafalgatha_description).progress(R.id.progressbar_khedutgatha_detail_first).image(kheduSafalGathaDetailModel.getPhotoPath(), false, false);
@@ -240,8 +261,92 @@ public class KhedutSafalGathaDetailFragment extends Fragment {
                 } else {
                     ivKhedutsafalgathaDescriptionSecond.setVisibility(View.GONE);
                 }
+                if (!TextUtils.isEmpty(kheduSafalGathaDetailModel.getDetailMiddleAdd())) {
+                    imageLoader.displayImage(kheduSafalGathaDetailModel.getDetailMiddleAdd(), ivKhedutsafalgathaDescriptionSecondadv);
+                } else {
+                    ivKhedutsafalgathaDescriptionSecondadv.setVisibility(View.GONE);
+                }
+
+                ivKhedutsafalgathaDescriptionSecond.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        setAdvClick(kheduSafalGathaDetailModel);
+                    }
+                });
+
+                ivKhedutsafalgathaDescriptionSecondadv.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        setMiddleAdvClick(kheduSafalGathaDetailModel);
+                    }
+                });
             }catch (Exception e){
 
+            }
+        }
+    }
+
+    private void setAdvClick(final KheduSafalGathaDetailModel samacharModel) {
+        if (samacharModel != null) {
+            if (samacharModel.getContactNo().trim().length() > 0) {
+                Intent intent = new Intent(Intent.ACTION_DIAL);
+                intent.setData(Uri.parse("tel:" + samacharModel.getContactNo().trim()));
+                startActivity(intent);
+            } else if (samacharModel.getPopup().trim().length() > 0) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setPositiveButton("Close", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                final AlertDialog dialog = builder.create();
+
+                View dialogLayout = inflater.inflate(R.layout.detail_adv_dialog_layout, null);
+                dialog.setView(dialogLayout);
+                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+                dialog.show();
+
+                dialog.setOnShowListener(new DialogInterface.OnShowListener() {
+                    @Override
+                    public void onShow(DialogInterface d) {
+                        ImageView image = (ImageView) dialog.findViewById(R.id.goProDialogImage);
+                        imageLoader.displayImage(samacharModel.getPopup().trim(), image, options);
+                    }
+                });
+            }
+        }
+    }
+
+    private void setMiddleAdvClick(final KheduSafalGathaDetailModel samacharModel) {
+        if (samacharModel != null) {
+            if (samacharModel.getContactNo2().trim().length() > 0) {
+                Intent intent = new Intent(Intent.ACTION_DIAL);
+                intent.setData(Uri.parse("tel:" + samacharModel.getContactNo2().trim()));
+                startActivity(intent);
+            } else if (samacharModel.getPopup2().trim().length() > 0) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setPositiveButton("Close", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                final AlertDialog dialog = builder.create();
+
+                View dialogLayout = inflater.inflate(R.layout.detail_adv_dialog_layout, null);
+                dialog.setView(dialogLayout);
+                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+                dialog.show();
+                dialog.setOnShowListener(new DialogInterface.OnShowListener() {
+                    @Override
+                    public void onShow(DialogInterface d) {
+                        ImageView image = (ImageView) dialog.findViewById(R.id.goProDialogImage);
+                        imageLoader.displayImage(samacharModel.getPopup2().trim(), image, options);
+                    }
+                });
             }
         }
     }

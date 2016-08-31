@@ -1,10 +1,13 @@
 package com.agriscienceapp.fragments;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -36,6 +39,7 @@ import com.agriscienceapp.common.Utility;
 import com.agriscienceapp.font.AgriScienceTextView;
 import com.agriscienceapp.font.FontUtils;
 import com.agriscienceapp.model.Detail;
+import com.agriscienceapp.model.KheduSafalGathaDetailModel;
 import com.agriscienceapp.model.MessageListVo;
 import com.agriscienceapp.model.SamacharModel;
 import com.agriscienceapp.webservice.GetJsonWithCallBack;
@@ -177,6 +181,13 @@ public class SamacharFragment extends Fragment {
                             } else {
                                 ivAdsSamachar.setVisibility(View.GONE);
                             }
+                            ivAdsSamachar.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    setAdvClick(getSamacharDetailListArrayList.get(0));
+                                }
+                            });
+
                         } catch (Exception e) {
 
                         }
@@ -231,6 +242,39 @@ public class SamacharFragment extends Fragment {
             progressDialog.dismiss();
         }
         return SamacharView;
+    }
+
+    private void setAdvClick(final Detail samacharModel) {
+        if (samacharModel != null) {
+            if (samacharModel.getContactNo().trim().length() > 0) {
+                Intent intent = new Intent(Intent.ACTION_DIAL);
+                intent.setData(Uri.parse("tel:" + samacharModel.getContactNo().trim()));
+                startActivity(intent);
+            } else if (samacharModel.getPopup().trim().length() > 0) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setPositiveButton("Close", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                final AlertDialog dialog = builder.create();
+
+                View dialogLayout = inflaterView.inflate(R.layout.detail_adv_dialog_layout, null);
+                dialog.setView(dialogLayout);
+                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+                dialog.show();
+
+                dialog.setOnShowListener(new DialogInterface.OnShowListener() {
+                    @Override
+                    public void onShow(DialogInterface d) {
+                        ImageView image = (ImageView) dialog.findViewById(R.id.goProDialogImage);
+                        imageLoader.displayImage(samacharModel.getPopup().trim(), image, optionsAdBanner);
+                    }
+                });
+            }
+        }
     }
 
     private void getIntentData() {

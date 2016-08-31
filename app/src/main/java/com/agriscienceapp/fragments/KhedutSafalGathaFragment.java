@@ -1,8 +1,14 @@
 package com.agriscienceapp.fragments;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -12,6 +18,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -20,11 +27,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.agriscienceapp.R;
+import com.agriscienceapp.common.Common;
 import com.agriscienceapp.common.Utility;
 import com.agriscienceapp.font.AgriScienceTextView;
 import com.agriscienceapp.font.FontUtils;
 import com.agriscienceapp.model.KheduSafalGathaDetailModel;
 import com.agriscienceapp.model.KhedutSafalGathaModel;
+import com.agriscienceapp.webservice.AndroidNetworkUtility;
 import com.agriscienceapp.webservice.RestClientRetroFit;
 import com.androidquery.AQuery;
 import com.google.android.gms.ads.AdView;
@@ -139,6 +148,12 @@ public class KhedutSafalGathaFragment extends Fragment {
                                 ivAdsKhedutgatha.setVisibility(View.GONE);
                             }
 
+                            ivAdsKhedutgatha.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    setAdvClick(getKhedutSafalGathaDetailListArrayList.get(0));
+                                }
+                            });
                             //      Arraylist for listview
                             tempArrListKhedutGatha = new ArrayList<KheduSafalGathaDetailModel>();
                             for (int count = 1; count < getKhedutSafalGathaDetailListArrayList.size(); count++) {
@@ -167,10 +182,11 @@ public class KhedutSafalGathaFragment extends Fragment {
                                 }
                             });
                         }
-                    }catch (Exception e){
+                    } catch (Exception e) {
 
                     }
                 }
+
                 @Override
                 public void failure(RetrofitError error) {
                     progressDialog.dismiss();
@@ -182,6 +198,39 @@ public class KhedutSafalGathaFragment extends Fragment {
         }
 
         return KhedutSafalGathaView;
+    }
+
+    private void setAdvClick(final KheduSafalGathaDetailModel kheduSafalGathaDetailModel) {
+        if (kheduSafalGathaDetailModel != null) {
+            if (kheduSafalGathaDetailModel.getContactNo().trim().length() > 0) {
+                Intent intent = new Intent(Intent.ACTION_DIAL);
+                intent.setData(Uri.parse("tel:" + kheduSafalGathaDetailModel.getContactNo().trim()));
+                startActivity(intent);
+            } else if (kheduSafalGathaDetailModel.getPopup().trim().length() > 0) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setPositiveButton("Close", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                final AlertDialog dialog = builder.create();
+
+                View dialogLayout = inflaterView.inflate(R.layout.detail_adv_dialog_layout, null);
+                dialog.setView(dialogLayout);
+                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+                dialog.show();
+
+                dialog.setOnShowListener(new DialogInterface.OnShowListener() {
+                    @Override
+                    public void onShow(DialogInterface d) {
+                        ImageView image = (ImageView) dialog.findViewById(R.id.goProDialogImage);
+                        imageLoader.displayImage(kheduSafalGathaDetailModel.getPopup().trim(), image, optionsAdBanner);
+                    }
+                });
+            }
+        }
     }
 
 
@@ -245,7 +294,7 @@ public class KhedutSafalGathaFragment extends Fragment {
                     imageLoader.displayImage(rowItems.get(position).getThumbs(), holder.rowKhedutSafalGathaThumb, options);
                     //    aq.id(R.id.row_khedut_safal_gatha_thumb).progress(R.id.progressbar_khedutgatha_listview).image(tempArrListKhedutGatha.get(position).getThumbs(), false, false);
                 }
-            }catch (Exception e){
+            } catch (Exception e) {
 
             }
 
@@ -254,7 +303,7 @@ public class KhedutSafalGathaFragment extends Fragment {
             convertView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                //    Toast.makeText(getActivity(), "KhedutSafalGatha  Fragment: " + tempArrListKhedutGatha.get(position).getStoryId(), Toast.LENGTH_SHORT).show();
+                    //    Toast.makeText(getActivity(), "KhedutSafalGatha  Fragment: " + tempArrListKhedutGatha.get(position).getStoryId(), Toast.LENGTH_SHORT).show();
                     Bundle bundle = new Bundle();
                     bundle.putInt("storyID", tempArrListKhedutGatha.get(position).getStoryId());
                     bundle.putInt("position", position);

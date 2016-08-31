@@ -9,6 +9,7 @@ public class SamacharDetailDescModel {
     private String NewsTitle;
     private String NewsTimeline;
     private String NewsDetail;
+    private String NewsDetail2;
     private String NewsDate;
     private String Status;
     private String CreatedBy;
@@ -16,9 +17,65 @@ public class SamacharDetailDescModel {
     private String UpdatedBy;
     private String UpdatedDate;
     private String DetailAdd;
+    private String ContactNo;
+    private String Popup;
+    private String ContactNo2;
+    private String Popup2;
+
+
+    private String DetailMiddleAdd;
     private String IsExist;
     private int Priority;
     private String Photo;
+
+
+    public String getContactNo() {
+        return ContactNo;
+    }
+
+    public void setContactNo(String contactNo) {
+        ContactNo = contactNo;
+    }
+
+    public String getPopup() {
+        return Popup;
+    }
+
+    public void setPopup(String popup) {
+        Popup = popup;
+    }
+
+    public String getContactNo2() {
+        return ContactNo2;
+    }
+
+    public void setContactNo2(String contactNo2) {
+        ContactNo2 = contactNo2;
+    }
+
+    public String getPopup2() {
+        return Popup2;
+    }
+
+    public void setPopup2(String popup2) {
+        Popup2 = popup2;
+    }
+
+    public String getNewsDetail2() {
+        return NewsDetail2;
+    }
+
+    public void setNewsDetail2(String newsDetail2) {
+        NewsDetail2 = newsDetail2;
+    }
+
+    public String getDetailMiddleAdd() {
+        return DetailMiddleAdd;
+    }
+
+    public void setDetailMiddleAdd(String detailMiddleAdd) {
+        DetailMiddleAdd = detailMiddleAdd;
+    }
 
     public int getNewsId() {
         return NewsId;
