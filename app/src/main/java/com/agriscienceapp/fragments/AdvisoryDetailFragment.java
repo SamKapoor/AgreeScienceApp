@@ -174,6 +174,8 @@ public class AdvisoryDetailFragment extends Fragment {
                         krushiSalahAdvisoryDetailSecondModel.setDescription(detailJson.getString("Description"));
                         krushiSalahAdvisoryDetailSecondModel.setPhoto(detailJson.getString("Photo"));
                         krushiSalahAdvisoryDetailSecondModel.setDetailAdd(detailJson.getString("DetailAdd"));
+                        krushiSalahAdvisoryDetailSecondModel.setContactNo(detailJson.getString("ContactNo"));
+                        krushiSalahAdvisoryDetailSecondModel.setPopup(detailJson.getString("Popup"));
                         krushiSalahAdvisoryDetailSecondModel.setWidth(detailJson.getString("Width"));
                         krushiSalahAdvisoryDetailSecondModel.setHeight(detailJson.getString("Height"));
 

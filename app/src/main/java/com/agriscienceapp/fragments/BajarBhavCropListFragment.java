@@ -260,6 +260,8 @@ public class BajarBhavCropListFragment extends Fragment {
                         bajarBhavCropListDetailModel.setHighestPrice(detailJson.getString("AveragePrice"));
                         bajarBhavCropListDetailModel.setTransactionDate(detailJson.getString("TransactionDate"));
                         bajarBhavCropListDetailModel.setDetailAdd(detailJson.getString("DetailAdd"));
+                        bajarBhavCropListDetailModel.setContactNo(detailJson.getString("ContactNo"));
+                        bajarBhavCropListDetailModel.setPopup(detailJson.getString("Popup"));
                         bajarBhavCropListDetailModel.setWidth(detailJson.getString("Width"));
                         bajarBhavCropListDetailModel.setHeight(detailJson.getString("Height"));
                         getBajarBhavCropDetailListArrayList.add(bajarBhavCropListDetailModel);

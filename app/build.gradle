@@ -7,7 +7,7 @@ android {
         config {
             keyAlias 'infinium'
             keyPassword 'infinium'
-            storeFile file('D:/Sanjay/Work/Personal Work/Infinium/AgreeScienceApp/app/src/main/assets/infinium_keystore.jks')
+            storeFile file('E:/Client/a/AgreeScienceApp/app/src/main/assets/infinium_keystore.jks')
             storePassword 'infinium'
         }
     }
