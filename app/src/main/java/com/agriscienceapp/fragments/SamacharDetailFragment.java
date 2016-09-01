@@ -31,6 +31,7 @@ import com.agriscienceapp.model.Detail;
 import com.agriscienceapp.model.SamacharDetailDescModel;
 import com.agriscienceapp.webservice.AndroidNetworkUtility;
 import com.androidquery.AQuery;
+import com.bumptech.glide.Glide;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
@@ -219,6 +220,10 @@ public class SamacharDetailFragment extends Fragment {
                         samacharDetailDescModel.setContactNo2(detailJson.getString("ContactNo2"));
                         samacharDetailDescModel.setPopup(detailJson.getString("Popup"));
                         samacharDetailDescModel.setPopup2(detailJson.getString("Popup2"));
+                        samacharDetailDescModel.setWidth(detailJson.getString("Width"));
+                        samacharDetailDescModel.setHeight(detailJson.getString("Height"));
+                        samacharDetailDescModel.setWidth2(detailJson.getString("Width2"));
+                        samacharDetailDescModel.setHeight2(detailJson.getString("Height2"));
                     }
                 }
 
@@ -255,12 +260,35 @@ public class SamacharDetailFragment extends Fragment {
                     timelineSamacharDetail.setText(samacharDetailDescModel.getNewsTimeline());
                 }
                 if (!TextUtils.isEmpty(samacharDetailDescModel.getDetailAdd())) {
-                    imageLoader.displayImage(samacharDetailDescModel.getDetailAdd(), ivSamacharDetailSecond);
+//                    imageLoader.displayImage(samacharDetailDescModel.getDetailAdd(), ivSamacharDetailSecond);
+                    int width = 50;
+                    int height = 50;
+                    try{
+                        width =Integer.parseInt(samacharDetailDescModel.getWidth());
+                        height = Integer.parseInt(samacharDetailDescModel.getHeight());
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+                    Glide.with(getActivity()).load(samacharDetailDescModel.getDetailAdd().trim()).into(ivSamacharDetailSecond);
+                    ivSamacharDetailSecond.getLayoutParams().height = height;
+                    ivSamacharDetailSecond.requestLayout();
                 } else {
                     ivSamacharDetailSecond.setVisibility(View.GONE);
                 }
                 if (!TextUtils.isEmpty(samacharDetailDescModel.getDetailMiddleAdd())) {
-                    imageLoader.displayImage(samacharDetailDescModel.getDetailMiddleAdd(), ivSamacharDetailSecondAdv);
+//                    imageLoader.displayImage(samacharDetailDescModel.getDetailMiddleAdd(), ivSamacharDetailSecondAdv);
+                    int width = 50;
+                    int height = 50;
+                    try{
+                        height = Integer.parseInt(samacharDetailDescModel.getHeight2());
+                        width =Integer.parseInt(samacharDetailDescModel.getWidth2());
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+                    Glide.with(getActivity()).load(samacharDetailDescModel.getDetailMiddleAdd().trim()).into(ivSamacharDetailSecondAdv);
+                    ivSamacharDetailSecondAdv.getLayoutParams().height = height;
+                    ivSamacharDetailSecondAdv.requestLayout();
+
                 } else {
                     ivSamacharDetailSecondAdv.setVisibility(View.GONE);
                 }

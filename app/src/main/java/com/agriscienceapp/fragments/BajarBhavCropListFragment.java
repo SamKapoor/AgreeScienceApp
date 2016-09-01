@@ -260,6 +260,8 @@ public class BajarBhavCropListFragment extends Fragment {
                         bajarBhavCropListDetailModel.setHighestPrice(detailJson.getString("AveragePrice"));
                         bajarBhavCropListDetailModel.setTransactionDate(detailJson.getString("TransactionDate"));
                         bajarBhavCropListDetailModel.setDetailAdd(detailJson.getString("DetailAdd"));
+                        bajarBhavCropListDetailModel.setWidth(detailJson.getString("Width"));
+                        bajarBhavCropListDetailModel.setHeight(detailJson.getString("Height"));
                         getBajarBhavCropDetailListArrayList.add(bajarBhavCropListDetailModel);
                         if (i == 0) {
                             yardName = detailJson.getString("YardName");
@@ -298,6 +300,16 @@ public class BajarBhavCropListFragment extends Fragment {
                 if (!TextUtils.isEmpty(getBajarBhavCropDetailListArrayList.get(position).getDetailAdd())) {
                     imageLoader.displayImage(getBajarBhavCropDetailListArrayList.get(position).getDetailAdd(), ivAdsSamachar, optionsAdBanner);
 //                            aq.id(R.id.iv_ads_samachar).progress(R.id.progressbar_samachar_header).image(getSamacharDetailListArrayList.get(0).getThumbs(), false, false);
+                    int width = 50;
+                    int height = 50;
+                    try{
+                        height = Integer.parseInt(getBajarBhavCropDetailListArrayList.get(0).getHeight());
+                        width =Integer.parseInt(getBajarBhavCropDetailListArrayList.get(0).getWidth());
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+                    ivAdsSamachar.getLayoutParams().height = height;
+                    ivAdsSamachar.requestLayout();
                 } else {
                     ivAdsSamachar.setVisibility(View.GONE);
                 }

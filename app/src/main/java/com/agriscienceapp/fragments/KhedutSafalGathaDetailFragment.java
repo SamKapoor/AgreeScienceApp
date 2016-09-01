@@ -216,6 +216,10 @@ public class KhedutSafalGathaDetailFragment extends Fragment {
                         kheduSafalGathaDetailModel.setContactNo2(detailJson.getString("ContactNo2"));
                         kheduSafalGathaDetailModel.setPopup(detailJson.getString("Popup"));
                         kheduSafalGathaDetailModel.setPopup2(detailJson.getString("Popup2"));
+                        kheduSafalGathaDetailModel.setWidth(detailJson.getString("Width"));
+                        kheduSafalGathaDetailModel.setHeight(detailJson.getString("Height"));
+                        kheduSafalGathaDetailModel.setWidth2(detailJson.getString("Width2"));
+                        kheduSafalGathaDetailModel.setHeight2(detailJson.getString("Height2"));
                     }
                 }
             } catch (Exception e) {
@@ -258,11 +262,31 @@ public class KhedutSafalGathaDetailFragment extends Fragment {
 
                 if (!TextUtils.isEmpty(kheduSafalGathaDetailModel.getDetailAdd())) {
                     imageLoader.displayImage(kheduSafalGathaDetailModel.getDetailAdd(), ivKhedutsafalgathaDescriptionSecond);
+                    int width = 50;
+                    int height = 50;
+                    try{
+                        height = Integer.parseInt(kheduSafalGathaDetailModel.getHeight());
+                        width =Integer.parseInt(kheduSafalGathaDetailModel.getWidth());
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+                    ivKhedutsafalgathaDescriptionSecond.getLayoutParams().height = height;
+                    ivKhedutsafalgathaDescriptionSecond.requestLayout();
                 } else {
                     ivKhedutsafalgathaDescriptionSecond.setVisibility(View.GONE);
                 }
                 if (!TextUtils.isEmpty(kheduSafalGathaDetailModel.getDetailMiddleAdd())) {
                     imageLoader.displayImage(kheduSafalGathaDetailModel.getDetailMiddleAdd(), ivKhedutsafalgathaDescriptionSecondadv);
+                    int width = 50;
+                    int height = 50;
+                    try{
+                        height = Integer.parseInt(kheduSafalGathaDetailModel.getHeight2());
+                        width =Integer.parseInt(kheduSafalGathaDetailModel.getWidth2());
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+                    ivKhedutsafalgathaDescriptionSecondadv.getLayoutParams().height = height;
+                    ivKhedutsafalgathaDescriptionSecondadv.requestLayout();
                 } else {
                     ivKhedutsafalgathaDescriptionSecondadv.setVisibility(View.GONE);
                 }

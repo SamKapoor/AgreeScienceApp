@@ -177,7 +177,18 @@ public class SamacharFragment extends Fragment {
                             }
 
                             if (!TextUtils.isEmpty(getSamacharDetailListArrayList.get(0).getMainAdd())) {
-                                imageLoader.displayImage(getSamacharDetailListArrayList.get(0).getMainAdd(), ivAdsSamachar, optionsAdBanner);
+//                                imageLoader.displayImage(getSamacharDetailListArrayList.get(0).getMainAdd(), ivAdsSamachar, optionsAdBanner);
+                                Glide.with(getActivity()).load(getSamacharDetailListArrayList.get(0).getMainAdd().trim()).into(ivAdsSamachar);
+                                int width = 50;
+                                int height = 50;
+                                try{
+                                    height = Integer.parseInt(getSamacharDetailListArrayList.get(0).getHeight());
+                                    width =Integer.parseInt(getSamacharDetailListArrayList.get(0).getWidth());
+                                }catch (Exception e){
+                                    e.printStackTrace();
+                                }
+                                ivAdsSamachar.getLayoutParams().height = height;
+                                ivAdsSamachar.requestLayout();
 //                            aq.id(R.id.iv_ads_samachar).progress(R.id.progressbar_samachar_header).image(getSamacharDetailListArrayList.get(0).getThumbs(), false, false);
                             } else {
                                 ivAdsSamachar.setVisibility(View.GONE);

@@ -114,6 +114,16 @@ public class AgriScienceTVFragment extends Fragment {
 
                     if (!TextUtils.isEmpty(getAgriScienceDetailModelArrayList.get(0).getMainAdd())) {
                         Glide.with(getActivity()).load(getAgriScienceDetailModelArrayList.get(0).getMainAdd()).into(ivAgriscienceTvAd);
+                        int width = 50;
+                        int height = 50;
+                        try{
+                            height = Integer.parseInt(getAgriScienceDetailModelArrayList.get(0).getHeight());
+                            width =Integer.parseInt(getAgriScienceDetailModelArrayList.get(0).getWidth());
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
+                        ivAgriscienceTvAd.getLayoutParams().height = height;
+                        ivAgriscienceTvAd.requestLayout();
 //                            aq.id(R.id.iv_ads_samachar).progress(R.id.progressbar_samachar_header).image(getSamacharDetailListArrayList.get(0).getThumbs(), false, false);
                     } else {
                         ivAgriscienceTvAd.setVisibility(View.GONE);

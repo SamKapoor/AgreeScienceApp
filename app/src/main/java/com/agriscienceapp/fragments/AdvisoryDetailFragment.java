@@ -174,6 +174,8 @@ public class AdvisoryDetailFragment extends Fragment {
                         krushiSalahAdvisoryDetailSecondModel.setDescription(detailJson.getString("Description"));
                         krushiSalahAdvisoryDetailSecondModel.setPhoto(detailJson.getString("Photo"));
                         krushiSalahAdvisoryDetailSecondModel.setDetailAdd(detailJson.getString("DetailAdd"));
+                        krushiSalahAdvisoryDetailSecondModel.setWidth(detailJson.getString("Width"));
+                        krushiSalahAdvisoryDetailSecondModel.setHeight(detailJson.getString("Height"));
 
                     }
                 }
@@ -211,6 +213,16 @@ public class AdvisoryDetailFragment extends Fragment {
 
                 if (!TextUtils.isEmpty(krushiSalahAdvisoryDetailSecondModel.getDetailAdd()) && !krushiSalahAdvisoryDetailSecondModel.getDetailAdd().equalsIgnoreCase("null")) {
                     imageLoader.displayImage(krushiSalahAdvisoryDetailSecondModel.getDetailAdd(), ivAdsAdvisoryDetail);
+                    int width = 50;
+                    int height = 50;
+                    try{
+                        height = Integer.parseInt(krushiSalahAdvisoryDetailSecondModel.getHeight());
+                        width =Integer.parseInt(krushiSalahAdvisoryDetailSecondModel.getWidth());
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+                    ivAdsAdvisoryDetail.getLayoutParams().height = height;
+                    ivAdsAdvisoryDetail.requestLayout();
 //                aq.id(R.id.iv_ads_advisory_detail).progress(R.id.progressbar_advisory_detail_second).image(krushiSalahAdvisoryDetailSecondModel.getPhoto(), false, true);
                     ll_advisory_image_second.setVisibility(View.VISIBLE);
                 } else {

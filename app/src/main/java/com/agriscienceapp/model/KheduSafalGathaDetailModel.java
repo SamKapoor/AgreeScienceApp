@@ -25,6 +25,42 @@ public class KheduSafalGathaDetailModel {
     private String Popup;
     private String ContactNo2;
     private String Popup2;
+    private String Height;
+    private String Width;
+    private String Height2;
+    private String Width2;
+
+    public String getHeight() {
+        return Height;
+    }
+
+    public void setHeight(String height) {
+        Height = height;
+    }
+
+    public String getWidth() {
+        return Width;
+    }
+
+    public void setWidth(String width) {
+        Width = width;
+    }
+
+    public String getHeight2() {
+        return Height2;
+    }
+
+    public void setHeight2(String height2) {
+        Height2 = height2;
+    }
+
+    public String getWidth2() {
+        return Width2;
+    }
+
+    public void setWidth2(String width2) {
+        Width2 = width2;
+    }
 
     public String getContactNo2() {
         return ContactNo2;

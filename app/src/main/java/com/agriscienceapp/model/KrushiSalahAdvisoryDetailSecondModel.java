@@ -12,6 +12,24 @@ public class KrushiSalahAdvisoryDetailSecondModel {
     private String DetailAdd;
     private String ContactNo;
     private String Popup;
+    private String Width;
+    private String Height;
+
+    public String getWidth() {
+        return Width;
+    }
+
+    public void setWidth(String width) {
+        Width = width;
+    }
+
+    public String getHeight() {
+        return Height;
+    }
+
+    public void setHeight(String height) {
+        Height = height;
+    }
 
     public String getContactNo() {
         return ContactNo;

@@ -143,6 +143,16 @@ public class KhedutSafalGathaFragment extends Fragment {
 
                             if (!TextUtils.isEmpty(getKhedutSafalGathaDetailListArrayList.get(0).getMainAdd()) && !getKhedutSafalGathaDetailListArrayList.get(0).getMainAdd().equalsIgnoreCase("null")) {
                                 imageLoader.displayImage(getKhedutSafalGathaDetailListArrayList.get(0).getMainAdd(), ivAdsKhedutgatha, optionsAdBanner);
+                                int width = 50;
+                                int height = 50;
+                                try{
+                                    height = Integer.parseInt(getKhedutSafalGathaDetailListArrayList.get(0).getHeight());
+                                    width =Integer.parseInt(getKhedutSafalGathaDetailListArrayList.get(0).getWidth());
+                                }catch (Exception e){
+                                    e.printStackTrace();
+                                }
+                                ivAdsKhedutgatha.getLayoutParams().height = height;
+                                ivAdsKhedutgatha.requestLayout();
 //                            aq.id(R.id.iv_ads_samachar).progress(R.id.progressbar_samachar_header).image(getSamacharDetailListArrayList.get(0).getThumbs(), false, false);
                             } else {
                                 ivAdsKhedutgatha.setVisibility(View.GONE);
