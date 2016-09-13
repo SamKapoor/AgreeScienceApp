@@ -193,6 +193,7 @@
 
 
                 <CheckBox
+                    android:theme="@style/checkBoxStyle"
                     android:id="@+id/chekTerms"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

@@ -2,8 +2,12 @@ package com.agriscienceapp.fragments;
 
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -14,6 +18,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -23,8 +28,10 @@ import android.widget.Toast;
 import com.agriscienceapp.R;
 import com.agriscienceapp.font.AgriScienceTextView;
 import com.agriscienceapp.font.FontUtils;
+import com.agriscienceapp.model.Detail;
 import com.agriscienceapp.model.KrushiSalahAdvisoryDetailModel;
 import com.agriscienceapp.webservice.AndroidNetworkUtility;
+import com.bumptech.glide.Glide;
 import com.google.android.gms.ads.AdView;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -75,6 +82,9 @@ public class KrushiSalahDetailFragment extends Fragment {
     private ImageLoader imageLoader;
     private DisplayImageOptions displayImageOptions;
     private DisplayImageOptions optionsAdBanner;
+    private String contact;
+    private String popup;
+    private LayoutInflater inflater;
 
     public KrushiSalahDetailFragment() {
         // Required empty public constructor
@@ -86,6 +96,7 @@ public class KrushiSalahDetailFragment extends Fragment {
         KrushiSalahDetailView = inflater.inflate(R.layout.fragment_krushisalah_detail, container, false);
         ButterKnife.bind(this, KrushiSalahDetailView);
 
+        this.inflater = inflater;
         imageLoader = ImageLoader.getInstance();
         displayImageOptions = new DisplayImageOptions.Builder()
                 .showImageOnLoading(R.drawable.app_logo)
@@ -131,6 +142,8 @@ public class KrushiSalahDetailFragment extends Fragment {
         private ProgressDialog progress;
         KrushiSalahAdvisoryDetailModel krushiSalahAdvisoryDetailModel;
         private String imgAddUrl;
+        int width = 50;
+        int height = 50;
 
         public GetCropDetails(Context context, String APIURL_CALL) {
             this.mContext = context;
@@ -184,7 +197,16 @@ public class KrushiSalahDetailFragment extends Fragment {
                         getKrushiSalahAdvisoryDetailArrayList.add(krushiSalahAdvisoryDetailModel);
                         //    headerKrushisalahArrayList.add(krushiSalahDetailModel);
                         if (i == 0) {
-                            imgAddUrl = detailJson.getString("MainAdd");
+                            imgAddUrl = detailJson.getString("MenuAdd");
+                            contact = detailJson.getString("ContactNo");
+                            popup = detailJson.getString("Popup");
+                            try {
+                                height = Integer.parseInt(detailJson.getString("Height"));
+                                width = Integer.parseInt(detailJson.getString("Width"));
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+
                         }
                     }
                 }
@@ -213,14 +235,56 @@ public class KrushiSalahDetailFragment extends Fragment {
                     ivAdsSamachar.setVisibility(View.GONE);
                 }
 
+
+                ivAdsSamachar.getLayoutParams().height = height;
+                ivAdsSamachar.requestLayout();
+
+                ivAdsSamachar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        setAdvClick();
+                    }
+                });
+
                 if (getKrushiSalahAdvisoryDetailArrayList != null && getKrushiSalahAdvisoryDetailArrayList.size() > 0) {
                     CustomBaseAdapter customBaseAdapter = new CustomBaseAdapter(getActivity(), getKrushiSalahAdvisoryDetailArrayList);
                     llAdvisoryList.setAdapter(customBaseAdapter);
                 }
 
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
+        }
+    }
+
+    private void setAdvClick() {
+        if (contact.trim().length() > 0) {
+            Intent intent = new Intent(Intent.ACTION_DIAL);
+            intent.setData(Uri.parse("tel:" + contact.trim()));
+            startActivity(intent);
+        } else if (popup.trim().length() > 0) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setPositiveButton("Close", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+            final AlertDialog dialog = builder.create();
+
+            View dialogLayout = inflater.inflate(R.layout.detail_adv_dialog_layout, null);
+            dialog.setView(dialogLayout);
+            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+            dialog.setOnShowListener(new DialogInterface.OnShowListener() {
+                @Override
+                public void onShow(DialogInterface d) {
+                    ImageView image = (ImageView) dialog.findViewById(R.id.goProDialogImage);
+//                        imageLoader.displayImage(samacharModel.getPopup().trim(), image, optionsAdBanner);
+                    Glide.with(getActivity()).load(popup.trim()).into(image);
+                }
+            });
+            dialog.show();
         }
     }
 
@@ -228,19 +292,20 @@ public class KrushiSalahDetailFragment extends Fragment {
     void ListViewItemClick(int position) {
         //  Toast.makeText(getActivity(), "KrushiSalah Detail  Fragment: " + getKrushiSalahAdvisoryDetailArrayList.get(position).getAdviseId(), Toast.LENGTH_SHORT).show();
 
-            Bundle bundle = new Bundle();
-            bundle.putInt("adviseID", getKrushiSalahAdvisoryDetailArrayList.get(position).getAdviseId());
-            bundle.putInt("position", position);
+        Bundle bundle = new Bundle();
+        bundle.putInt("adviseID", getKrushiSalahAdvisoryDetailArrayList.get(position).getAdviseId());
+        bundle.putInt("position", position);
 
-            fragmentManager = getActivity().getSupportFragmentManager();
-            fragmentTransaction = fragmentManager.beginTransaction();
-            AdvisoryDetailFragment advisoryDetailFragment = new AdvisoryDetailFragment();
-            fragmentTransaction.replace(R.id.frame_container, advisoryDetailFragment, AdvisoryDetailFragment.class.getSimpleName());
-            advisoryDetailFragment.setArguments(bundle);
+        fragmentManager = getActivity().getSupportFragmentManager();
+        fragmentTransaction = fragmentManager.beginTransaction();
+        AdvisoryDetailFragment advisoryDetailFragment = new AdvisoryDetailFragment();
+        fragmentTransaction.replace(R.id.frame_container, advisoryDetailFragment, AdvisoryDetailFragment.class.getSimpleName());
+        advisoryDetailFragment.setArguments(bundle);
 //        fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-            fragmentTransaction.addToBackStack(AdvisoryDetailFragment.class.getSimpleName());
-            fragmentTransaction.commit();
+        fragmentTransaction.addToBackStack(AdvisoryDetailFragment.class.getSimpleName());
+        fragmentTransaction.commit();
     }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
@@ -275,7 +340,7 @@ public class KrushiSalahDetailFragment extends Fragment {
                     holder.krushisalahAdvisoryTvTitle.setText(rowItems.get(position).getAdviseTitle());
                 }
                 //      imageLoader.displayImage(rowItems.get(position).getThumbs(), holder.krushisalahAdvisoryThumb, options);
-            }catch (Exception e){
+            } catch (Exception e) {
 
             }
             return convertView;
