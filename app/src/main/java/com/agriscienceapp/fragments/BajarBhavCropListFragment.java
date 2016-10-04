@@ -30,7 +30,6 @@ import android.widget.Toast;
 
 import com.agriscienceapp.R;
 import com.agriscienceapp.font.AgriScienceTextView;
-import com.agriscienceapp.model.AgriScienceTVDetailModel;
 import com.agriscienceapp.model.BajarBhavCropListDetailModel;
 import com.agriscienceapp.webservice.AndroidNetworkUtility;
 import com.bumptech.glide.Glide;
@@ -122,13 +121,17 @@ public class BajarBhavCropListFragment extends Fragment {
     public void onClickShare() {
         ivBajarBhavShare.setVisibility(View.GONE);
         ivAdsSamachar.setVisibility(View.GONE);
-        Bitmap bitmap = captureView(llBajarBhavCapture);
-        String pathofBmp = MediaStore.Images.Media.insertImage(getActivity().getContentResolver(), bitmap, "title", null);
-        Uri bmpUri = Uri.parse(pathofBmp);
-        Intent sharingIntent = new Intent(Intent.ACTION_SEND);
-        sharingIntent.setType("image/jpeg");
-        sharingIntent.putExtra(Intent.EXTRA_STREAM, bmpUri);
-        startActivity(Intent.createChooser(sharingIntent, "Share image using"));
+        try {
+            Bitmap bitmap = captureView(llBajarBhavCapture);
+            String pathofBmp = MediaStore.Images.Media.insertImage(getActivity().getContentResolver(), bitmap, "title", null);
+            Uri bmpUri = Uri.parse(pathofBmp);
+            Intent sharingIntent = new Intent(Intent.ACTION_SEND);
+            sharingIntent.setType("image/jpeg");
+            sharingIntent.putExtra(Intent.EXTRA_STREAM, bmpUri);
+            startActivity(Intent.createChooser(sharingIntent, "Share image using"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         ivBajarBhavShare.setVisibility(View.VISIBLE);
         ivAdsSamachar.setVisibility(View.VISIBLE);
     }
@@ -165,7 +168,7 @@ public class BajarBhavCropListFragment extends Fragment {
 
         optionsAdBanner = new DisplayImageOptions.Builder()
                 .build();
-        this.inflater =inflater;
+        this.inflater = inflater;
         imageLoader = ImageLoader.getInstance();
         initLoader(getActivity());
         getBajarBhavCropDetailListArrayList = new ArrayList<BajarBhavCropListDetailModel>();
@@ -182,7 +185,7 @@ public class BajarBhavCropListFragment extends Fragment {
                 //      APICALL_URL = BASEURL + Methods + "KEY_ZONEID=" + ZoneId +"&KEY_YARDID="+YardId;  // Pass news id insteadof of 5.
                 APICALL_URL = BASEURL + Methods + KEY_ZONEID + "=" + ZoneId + "&" + KEY_YARDID + "=" + YardId; // Pass news id insteadof of 5.
             }
-        }catch (Exception e){
+        } catch (Exception e) {
 
         }
 
@@ -304,10 +307,10 @@ public class BajarBhavCropListFragment extends Fragment {
 //                            aq.id(R.id.iv_ads_samachar).progress(R.id.progressbar_samachar_header).image(getSamacharDetailListArrayList.get(0).getThumbs(), false, false);
                     int width = 50;
                     int height = 50;
-                    try{
+                    try {
                         height = Integer.parseInt(getBajarBhavCropDetailListArrayList.get(0).getHeight());
-                        width =Integer.parseInt(getBajarBhavCropDetailListArrayList.get(0).getWidth());
-                    }catch (Exception e){
+                        width = Integer.parseInt(getBajarBhavCropDetailListArrayList.get(0).getWidth());
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
                     ivAdsSamachar.getLayoutParams().height = height;
@@ -322,11 +325,11 @@ public class BajarBhavCropListFragment extends Fragment {
                     }
                 });
 
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
 
-            }
+        }
 
     }
 
@@ -418,7 +421,7 @@ public class BajarBhavCropListFragment extends Fragment {
                 if (!TextUtils.isEmpty(getBajarBhavCropDetailListArrayList.get(position).getAveragePrice())) {
                     holder.tvPriceAverageDigit.setText(rowItems.get(position).getAveragePrice());
                 }
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
             return convertView;

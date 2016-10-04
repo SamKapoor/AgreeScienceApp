@@ -106,7 +106,8 @@ public class BajarBhavYardListFragment extends Fragment {
             getYardListDetails.execute();
         } else {
             Toast.makeText(getActivity(), "Please Check Your Internet.", Toast.LENGTH_SHORT).show();
-            progress.dismiss();
+            if (progress != null && progress.isShowing())
+                progress.dismiss();
         }
 
         return BajarYardDetailView;
@@ -232,31 +233,31 @@ public class BajarBhavYardListFragment extends Fragment {
                 if (!TextUtils.isEmpty(getBajarBhavYardDetailListArrayList.get(position).getYardName())) {
                     holder.tvBajarYardDetail.setText(rowItems.get(position).getYardName());
                 }
-            }catch (Exception e){
+            } catch (Exception e) {
 
             }
-                convertView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        //   Toast.makeText(getActivity(), "BajarBhavZone Detail Fragment:" + getBajarBhavYardDetailListArrayList.get(position).getYardId(), Toast.LENGTH_SHORT).show();
-                            Bundle bundle = new Bundle();
-                            bundle.putInt("zoneID", getBajarBhavYardDetailListArrayList.get(position).getZoneId());
-                            bundle.putInt("yardID", getBajarBhavYardDetailListArrayList.get(position).getYardId());
-                            bundle.putInt("position", position);
-                            bundle.putInt("position", position);
+            convertView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //   Toast.makeText(getActivity(), "BajarBhavZone Detail Fragment:" + getBajarBhavYardDetailListArrayList.get(position).getYardId(), Toast.LENGTH_SHORT).show();
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("zoneID", getBajarBhavYardDetailListArrayList.get(position).getZoneId());
+                    bundle.putInt("yardID", getBajarBhavYardDetailListArrayList.get(position).getYardId());
+                    bundle.putInt("position", position);
+                    bundle.putInt("position", position);
 
-                            fragmentManager = getActivity().getSupportFragmentManager();
-                            fragmentTransaction = fragmentManager.beginTransaction();
-                            BajarBhavCropListFragment bajarBhavCropListFragment = new BajarBhavCropListFragment();
-                            fragmentTransaction.replace(R.id.frame_container, bajarBhavCropListFragment, BajarBhavCropListFragment.class.getSimpleName());
-                            bajarBhavCropListFragment.setArguments(bundle);
-                            //   fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-                            fragmentTransaction.addToBackStack(BajarBhavCropListFragment.class.getSimpleName());
-                            fragmentTransaction.commit();
-                    }
-                });
-                return convertView;
-            }
+                    fragmentManager = getActivity().getSupportFragmentManager();
+                    fragmentTransaction = fragmentManager.beginTransaction();
+                    BajarBhavCropListFragment bajarBhavCropListFragment = new BajarBhavCropListFragment();
+                    fragmentTransaction.replace(R.id.frame_container, bajarBhavCropListFragment, BajarBhavCropListFragment.class.getSimpleName());
+                    bajarBhavCropListFragment.setArguments(bundle);
+                    //   fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                    fragmentTransaction.addToBackStack(BajarBhavCropListFragment.class.getSimpleName());
+                    fragmentTransaction.commit();
+                }
+            });
+            return convertView;
+        }
 
 
         @Override

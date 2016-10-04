@@ -24,6 +24,7 @@ import java.io.UnsupportedEncodingException;
 public class AndroidNetworkUtility {
 
     private static final String TAG = "AndroidNetworkUtility";
+
     public static boolean isNetworkConnected(Context ctx) {
         boolean flag = false;
         ConnectivityManager connectivityManager =
@@ -76,12 +77,13 @@ public class AndroidNetworkUtility {
         } finally {
             Log.d(TAG, "finally .............");
             try {
-                inputStream.close();
+                if (inputStream != null)
+                    inputStream.close();
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
-        Log.d(TAG, result);
+        Log.d(TAG, "result: " + result);
         return result;
     }
 }
